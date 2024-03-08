@@ -1,22 +1,5 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase/firebase-config";
+import {registerUser} from "../../lib/firebase/auth/register-action"
 import { NextResponse } from "next/server";
-
-export async function registerUser(email: string, password: string) {
-    try {
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-        const user = userCredential.user;
-        console.log("User Registered: ", user);
-        return { success: true, user };
-    } catch (error) {
-        console.error("Error during registration:", error);
-        return { success: false, error: error.message };
-    }
-}
 
 export async function POST(request: Request) {
     try {
