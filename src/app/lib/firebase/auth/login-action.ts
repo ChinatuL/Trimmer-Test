@@ -57,7 +57,7 @@ export async function loginUser(email: string, password: string) {
                     secure: true,
                 };
                 cookies().set(options);
-                return NextResponse.json({ options }, { status: 200 });
+                return NextResponse.json({ options, user }, { status: 200 });
             }
         }
     } catch (error) {
