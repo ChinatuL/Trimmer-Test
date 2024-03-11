@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { makeUrlShort, copyLinkToClipboard } from "./lib/utilities/utils";
+import { makeUrlShort, copyLinkToClipboard, baseUrl } from "./lib/utilities/utils";
 import { db } from "./lib/firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
@@ -26,7 +26,7 @@ export default function Home() {
     }
   
   function handleCopy(e:React.MouseEvent<HTMLButtonElement>) {
-    copyLinkToClipboard(`localhost:3000/s/${shortLink}`)
+    copyLinkToClipboard(`${baseUrl}/${shortLink}`)
   }
 
     return (
@@ -49,7 +49,7 @@ export default function Home() {
             </form>
             {shortLink && (
                 <div className='flex gap-8 items-center mt-8'>
-                    <p>Short Link : localhost:3000/s/{shortLink}</p>
+            <p>Short Link : {baseUrl}/{shortLink}</p>
                     <button onClick={handleCopy}>Copy</button>
                     <QRCodeSVG value={longLink} />
                 </div>
