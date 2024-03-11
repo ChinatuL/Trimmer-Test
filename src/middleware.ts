@@ -26,11 +26,14 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         const links = await fetch(`${baseUrl}/api/links`);
         const linksResult = await links.json();
         const link = linksResult.links.find(
-            (link: any) => link.shortLink === shortLink
+            (link: any) => {
+              console.log(link)
+              return link.shortLink === shortLink
+            }
         );
-        console.log(linksResult);
-        console.log(linksResult.links);
-        console.log({ shortLink, link });
+        // console.log(linksResult);
+        // console.log(linksResult.links);
+        // console.log({ shortLink, link });
         if (link) {
             return NextResponse.redirect(new URL(link.longLink, request.url));
         }
