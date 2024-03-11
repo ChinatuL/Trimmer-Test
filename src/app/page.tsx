@@ -26,7 +26,7 @@ export default function Home() {
     }
   
   function handleCopy(e:React.MouseEvent<HTMLButtonElement>) {
-    copyLinkToClipboard(`${baseUrl}/s/${shortLink}`)
+    copyLinkToClipboard(`${baseUrl}s/${shortLink}`)
   }
 
     return (
@@ -49,7 +49,7 @@ export default function Home() {
             </form>
             {shortLink && (
                 <div className='flex gap-8 items-center mt-8'>
-            <p>Short Link : {baseUrl}/s/{shortLink}</p>
+            <p>Short Link : {baseUrl}s/{shortLink}</p>
                     <button onClick={handleCopy}>Copy</button>
                     <QRCodeSVG value={longLink} />
                 </div>
