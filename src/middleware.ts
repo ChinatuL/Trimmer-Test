@@ -23,7 +23,9 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
     if (request.nextUrl.pathname.startsWith("/s/")) {
         const shortLink = request.nextUrl.pathname.split("/")[2];
-        const links = await fetch(`${baseUrl}/api/links`);
+        const links = await fetch(`${baseUrl}/api/links`, {
+            cache: "no-store",
+        });
         const linksResult = await links.json();
         const link = linksResult.links.find(
             (link: any) => {
