@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     if (link) {
       return NextResponse.redirect(new URL(link.longLink, request.url));
     }
-    return NextResponse.next();
+    return NextResponse.redirect(new URL('https://google.com', request.url));
   }
 }
 
