@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         const link = linksResult.links.find(
             (link: any) => link.shortLink === shortLink
         );
-        console.log({ shortLink, links, linksResult, link });
+        console.log({ shortLink, link });
         if (link) {
             return NextResponse.redirect(new URL(link.longLink, request.url));
         }
