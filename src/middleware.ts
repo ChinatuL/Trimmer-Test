@@ -1,8 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { baseUrl, fetchLongAndShortLinkFromFirestore } from "./app/lib/utilities/utils";
-import { customInitApp } from "./app/lib/firebase/firebase-admin-config";
-import { getLongLinkFromFirestore } from "./app/lib/firebase/test";
-
+import { baseUrl } from "./app/lib/utilities/utils";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
   if (request.nextUrl.pathname === "/dashboard") {
