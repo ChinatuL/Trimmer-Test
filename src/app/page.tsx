@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { makeUrlShort, copyLinkToClipboard, baseUrl } from "./lib/utilities/utils";
+import {
+    makeUrlShort,
+    copyLinkToClipboard,
+    baseUrl,
+} from "./lib/utilities/utils";
 import { db } from "./lib/firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
@@ -19,15 +23,26 @@ export default function Home() {
         let linkObj = {
             longLink: link,
             shortLink: shortenedLink,
+            timestamp: new Date().toISOString(),
         };
         const linksRef = collection(db, "links");
         await addDoc(linksRef, linkObj);
         setLinks([...links, linkObj]);
+
+        try {
+            const res = await fetch(`${baseUrl}/api/links`);
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
-  
-  function handleCopy(e:React.MouseEvent<HTMLButtonElement>) {
-    copyLinkToClipboard(`${baseUrl}s/${shortLink}`)
-  }
+
+    function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
+        copyLinkToClipboard(`${baseUrl}s/${shortLink}`);
+    }
 
     return (
         <main className='flex min-h-screen flex-col items-center p-24'>
@@ -49,7 +64,9 @@ export default function Home() {
             </form>
             {shortLink && (
                 <div className='flex gap-8 items-center mt-8'>
-            <p>Short Link : {baseUrl}s/{shortLink}</p>
+                    <p>
+                        Short Link : {baseUrl}s/{shortLink}
+                    </p>
                     <button onClick={handleCopy}>Copy</button>
                     <QRCodeSVG value={longLink} />
                 </div>
