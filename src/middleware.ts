@@ -27,16 +27,11 @@ export async function middleware(request: NextRequest, response: NextResponse) {
             next: {revalidate: 0}
         });
       const linksResult = await links.json();
-      console.log(linksResult.links)
         const link = linksResult.links.find(
             (link: any) =>  link.shortLink === shortLink
         );
       if (link) {
-          console.log(link)
             return NextResponse.redirect(new URL(link.longLink, request.url));
         }
-        return NextResponse.redirect(
-            new URL("https://google.com", request.url)
-        );
     }
 }
