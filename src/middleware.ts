@@ -26,7 +26,8 @@ export async function middleware(request: NextRequest, response: NextResponse) {
         const links = await fetch(`${baseUrl}/api/links`, {
             cache: "no-store",
         });
-        const linksResult = await links.json();
+      const linksResult = await links.json();
+      console.log(linksResult.links)
         const link = linksResult.links.find(
             (link: any) =>  link.shortLink === shortLink
         );
