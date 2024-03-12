@@ -1,13 +1,4 @@
-import { db } from "../firebase/firebase-config";
 
-import {
-    collection,
-    getDocs,
-    onSnapshot,
-    query,
-    where,
-} from "firebase/firestore";
-import { nanoid } from "nanoid";
 export const baseUrl =
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000";
 
