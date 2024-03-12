@@ -2,8 +2,11 @@ import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
 import { getFirestore } from "firebase-admin/firestore";
 
+
 customInitApp();
 export async function GET(request: NextRequest) {
+  const shortenedLink = new URL(request.url)
+  const shortLink = shortenedLink.pathname.split("/")[2];
     try {
         const firebase = getFirestore();
         const linksCollection = firebase.collection("links");
@@ -12,12 +15,14 @@ export async function GET(request: NextRequest) {
         // limit it to 5
         const limitQuery = orderQuery.limit(5);
         // fetch the data
-        const lastFiveLinks = await limitQuery.get();
-      //   const collection = firebase.collection("links");
-      //   const links = await collection.get();
-      // const linksData = links.docs.map((doc) => doc.data());
+      const lastFiveLinks = await limitQuery.get();
+      // search for the short link in the last 5 links
+      const link = lastFiveLinks.docs.find(
+          (link) => link.data().shortLink === shortLink
+      );
+
       const lastFiveLinksData = lastFiveLinks.docs.map((doc) => doc.data());
-      return NextResponse.json({ links: lastFiveLinksData }, {
+      return NextResponse.json({ links: lastFiveLinksData, link: link }, {
         status: 200, headers: {
           "Cache-Control": "must-revalidate, max-age=0"
         } });
