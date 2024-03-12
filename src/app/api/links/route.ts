@@ -17,7 +17,10 @@ export async function GET(request: NextRequest) {
       //   const links = await collection.get();
       // const linksData = links.docs.map((doc) => doc.data());
       const lastFiveLinksData = lastFiveLinks.docs.map((doc) => doc.data());
-        return NextResponse.json({ links: lastFiveLinksData }, { status: 200 });
+      return NextResponse.json({ links: lastFiveLinksData }, {
+        status: 200, headers: {
+          "Cache-Control": "must-revalidate, max-age=0"
+        } });
     } catch (error) {
         console.error(error);
         return NextResponse.json(
