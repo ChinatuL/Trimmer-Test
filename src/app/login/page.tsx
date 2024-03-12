@@ -3,10 +3,14 @@ import { signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { auth, provider } from "../lib/firebase/firebase-config";
 import { useRouter } from "next/navigation";
+import { useUser } from "../context/user-context";
+import { saveUserToLocalStorage } from "../lib/utilities/utils";
 
 export default function Login() {
     const router = useRouter();
     const [error, setError] = useState("");
+  const { setUser } = useUser();
+  
 
     async function handleSignInWithEmail(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -23,6 +27,7 @@ export default function Login() {
                 const result = await res.json();
                 console.log(result);
                 setError("");
+                saveUserToLocalStorage(result);
                 router.replace("/dashboard");
             } else {
                 const errorResponse = await res.json();
@@ -37,7 +42,8 @@ export default function Login() {
 
     async function handleSignInWithGooglePopup() {
         try {
-            const userCredential = await signInWithPopup(auth, provider);
+          const userCredential = await signInWithPopup(auth, provider);
+          saveUserToLocalStorage(userCredential.user);
             if (!userCredential) {
                 return;
             }
@@ -48,6 +54,7 @@ export default function Login() {
                     Authorization: `Bearer ${await userCredential.user.getIdToken()}`,
                 },
             });
+
             if (res.status === 200) {
                 router.replace("/dashboard");
             }

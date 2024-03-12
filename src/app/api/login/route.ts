@@ -2,7 +2,10 @@ import { auth } from "firebase-admin";
 import { cookies, headers } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
 import { customInitApp } from "../../lib/firebase/firebase-admin-config";
-import { handleBearerToken, loginUser } from "@/app/lib/firebase/auth/login-action";
+import {
+    handleBearerToken,
+    loginUser,
+} from "@/app/lib/firebase/auth/login-action";
 
 customInitApp();
 

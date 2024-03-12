@@ -1,6 +1,6 @@
 
 export const baseUrl =
-    process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000";
+    process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000/";
 
 export function makeUrlShort(length: number) {
     let result = "";
@@ -22,4 +22,15 @@ export function copyLinkToClipboard(url:string) {
   }
 }
 
+export function saveUserToLocalStorage(user: any) {
+  if (typeof window !== undefined) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+}
+
+export function getUserFromLocalStorage() {
+    if (typeof window !== undefined) {
+        return JSON.parse(localStorage.getItem("user") || "{}");
+    }
+}
 
