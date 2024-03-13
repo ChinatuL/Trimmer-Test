@@ -10,9 +10,6 @@ import {
     saveUserToLocalStorage,
 } from "../lib/utilities/utils";
 import { useState } from "react";
-import { db } from "../lib/firebase/firebase-config";
-import { setDoc, doc } from "firebase/firestore";
-import { nanoid } from "nanoid";
 import { QRCodeSVG } from "qrcode.react";
 import { useUser } from "../context/user-context";
 
@@ -44,11 +41,18 @@ export default function Page() {
             shortLink: shortenedLink,
             timestamp: new Date().toISOString(),
         };
-        console.log(user);
-        const userRef = doc(db, "users", `${user.uid}`);
-        await setDoc(userRef, { email: user.email }, { merge: true });
-        const linksRef = doc(userRef, "links", nanoid());
-        await setDoc(linksRef, linkObj, { merge: true });
+        try {
+            const res = await fetch("/api/createLink", {
+                method: "POST",
+                body: JSON.stringify({ linkObj }),
+            });
+            if (res.ok) {
+                const result = await res.json();
+                console.log(result);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
