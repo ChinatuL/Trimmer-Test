@@ -7,7 +7,8 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [linkId, setLinkId] = useState("");
+  const [linkId, setLinkId] = useState("");
+  const [error, setError] = useState("");
     async function getLinks() {
         try {
             const res = await fetch("/api/authLinks");
@@ -59,7 +60,11 @@ export default function Page() {
                 getLinks();
                 setIsUpdating(false);
             }
-        } catch (error) {}
+        } catch (error) {
+          console.error(error);
+          const errResponse = await error.json();
+          setError(errResponse.error);
+        }
     }
 
     async function deleteLink() {
