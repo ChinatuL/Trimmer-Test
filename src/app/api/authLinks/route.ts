@@ -1,26 +1,14 @@
 import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { getFirestore } from "firebase-admin/firestore";
-import { deleteOldLinks } from "@/app/lib/firebase/firestore/links";
-import { auth } from "firebase-admin";
+import { firestore } from "../../lib/firebase/firebase-admin-config";
+import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
 
 customInitApp();
 // fetch the signed in users links from firestore with the users uid
 export async function GET(request: NextRequest) {
-    const session = request.cookies.get("session");
-    if (!session) {
-        return NextResponse.json(
-            { error: "User not authenticated" },
-            { status: 401 }
-        );
-    }
     try {
-        const decodedClaims = await auth().verifySessionCookie(
-            session.value,
-            true
-        );
-        const uid = decodedClaims.uid;
-        const firestore = getFirestore();
+        const result = await getUserUidAndEmail(request);
+        const { uid } = await result.json();
         const usersCollection = firestore
             .collection("users")
             .doc(uid)

@@ -1,25 +1,14 @@
 import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { getFirestore } from "firebase-admin/firestore";
-import { auth } from "firebase-admin";
+import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
+import { getLinkDocument } from "@/app/lib/firebase/firestore/get-user-links";
 
-// delete specific link by id from firestore
 customInitApp();
 
 export async function DELETE(request: NextRequest) {
-    const session = request.cookies.get("session");
-    if (!session) {
-        return NextResponse.json(
-            { error: "User not authenticated" },
-            { status: 401 }
-        );
-    }
     try {
-        const decodedClaims = await auth().verifySessionCookie(
-            session.value,
-            true
-        );
-        const uid = decodedClaims.uid;
+        const result = await getUserUidAndEmail(request);
+        const { uid } = await result.json();
         const { id } = await request.json();
         if (!id) {
             return NextResponse.json(
@@ -27,12 +16,7 @@ export async function DELETE(request: NextRequest) {
                 { status: 400 }
             );
         }
-        const firestore = getFirestore();
-        const docRef = firestore
-            .collection("users")
-            .doc(uid)
-            .collection("links")
-            .doc(id);
+        const docRef = getLinkDocument(uid, id);
         await docRef.delete();
         return NextResponse.json({ message: "Link deleted" }, { status: 200 });
     } catch (error) {
