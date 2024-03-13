@@ -10,7 +10,8 @@ export default function Page() {
         try {
             const res = await fetch("/api/authLinks");
             if (res.ok) {
-                const result = await res.json();
+              const result = await res.json();
+              console.log(result)
                 const links = result.links;
                 console.log(links);
                 setLinks(links);
@@ -48,7 +49,7 @@ export default function Page() {
                     return (
                         <div key={id} className='flex gap-8 items-center pb-4'>
                             <p>
-                                {baseUrl}s/{shortLink}
+                                {baseUrl}as/{shortLink}
                             </p>
                             <button>Copy</button>
                             <QRCodeSVG value={shortLink} size={60} />

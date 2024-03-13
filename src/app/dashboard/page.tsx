@@ -2,6 +2,7 @@
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../lib/firebase/firebase-config";
+import { addDoc } from "firebase/firestore";
 import {
     baseUrl,
     makeUrlShort,
@@ -44,12 +45,14 @@ export default function Page() {
             timestamp: new Date().toISOString(),
       };
       console.log(user)
-        const linksRef = doc(db, "users", `${user.uid}`, "links", nanoid());
-        await setDoc(linksRef, linkObj, { merge: true });
+      const userRef = doc(db, "users", `${user.uid}`)
+      await setDoc(userRef, {email: user.email}, {merge: true});
+      const linksRef = doc(userRef, "links", nanoid());
+      await setDoc(linksRef, linkObj, { merge: true });
     }
 
     function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
-        copyLinkToClipboard(`${baseUrl}s/${shortLink}`);
+        copyLinkToClipboard(`${baseUrl}as/${shortLink}`);
     }
 
     return (
@@ -80,7 +83,7 @@ export default function Page() {
                 {shortLink && (
                     <div className='flex gap-8 items-center mt-8'>
                         <p>
-                            Short Link : {baseUrl}s/{shortLink}
+                            Short Link : {baseUrl}as/{shortLink}
                         </p>
                         <button onClick={handleCopy}>Copy</button>
                         <QRCodeSVG value={longLink} />
