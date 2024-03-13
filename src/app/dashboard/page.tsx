@@ -43,16 +43,20 @@ export default function Page() {
             longLink: link,
             shortLink: shortenedLink,
             timestamp: new Date().toISOString(),
-      };
-      console.log(user)
-      const userRef = doc(db, "users", `${user.uid}`)
-      await setDoc(userRef, {email: user.email}, {merge: true});
-      const linksRef = doc(userRef, "links", nanoid());
-      await setDoc(linksRef, linkObj, { merge: true });
+        };
+        console.log(user);
+        const userRef = doc(db, "users", `${user.uid}`);
+        await setDoc(userRef, { email: user.email }, { merge: true });
+        const linksRef = doc(userRef, "links", nanoid());
+        await setDoc(linksRef, linkObj, { merge: true });
     }
 
     function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
         copyLinkToClipboard(`${baseUrl}as/${shortLink}`);
+    }
+
+    function deleteLink() {
+        console.log("link deleted");
     }
 
     return (
@@ -85,8 +89,25 @@ export default function Page() {
                         <p>
                             Short Link : {baseUrl}as/{shortLink}
                         </p>
-                        <button onClick={handleCopy}>Copy</button>
                         <QRCodeSVG value={longLink} />
+                        <button
+                            onClick={handleCopy}
+                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
+                        >
+                            Copy
+                        </button>
+                        <button
+                            onClick={deleteLink}
+                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
+                        >
+                            Delete
+                        </button>
+                        <button
+                            onClick={deleteLink}
+                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
+                        >
+                            Edit
+                        </button>
                     </div>
                 )}
             </div>

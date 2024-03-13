@@ -1,12 +1,12 @@
 import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
 import { getFirestore } from "firebase-admin/firestore";
-import { deleteOldLinks } from "@/app/lib/firebase/firestore/links";
 import { auth } from "firebase-admin";
 
+// delete specific link by id from firestore
 customInitApp();
-// fetch the signed in users links from firestore with the users uid
-export async function GET(request: NextRequest) {
+
+export async function POST(request: NextRequest) {
     const session = request.cookies.get("session");
     if (!session) {
         return NextResponse.json(
@@ -20,25 +20,21 @@ export async function GET(request: NextRequest) {
             true
         );
         const uid = decodedClaims.uid;
+        const { id, customName } = await request.json();
+        if (!id) {
+            return NextResponse.json(
+                { error: "Select a link to update" },
+                { status: 400 }
+            );
+        }
         const firestore = getFirestore();
-        const usersCollection = firestore
+        const docRef = firestore
             .collection("users")
             .doc(uid)
-            .collection("links");
-        const links = await usersCollection.get();
-        const linksData = links.docs.map((doc) => {
-            // spread the data and add the id
-            return { ...doc.data(), id: doc.id };
-        });
-        return NextResponse.json(
-            { links: linksData },
-            {
-                status: 200,
-                headers: {
-                    "Cache-Control": "must-revalidate, max-age=0",
-                },
-            }
-        );
+            .collection("links")
+            .doc(id);
+        await docRef.update({ shortLink: customName });
+        return NextResponse.json({ message: "Link updated" }, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json(
