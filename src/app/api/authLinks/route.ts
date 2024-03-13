@@ -1,6 +1,6 @@
 import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { firestore } from "../../lib/firebase/firebase-admin-config";
+import { getFirestore } from "firebase-admin/firestore";
 import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
 
 customInitApp();
@@ -8,7 +8,8 @@ customInitApp();
 export async function GET(request: NextRequest) {
     try {
         const result = await getUserUidAndEmail(request);
-        const { uid } = await result.json();
+      const { uid } = await result.json();
+      const firestore = getFirestore();
         const usersCollection = firestore
             .collection("users")
             .doc(uid)

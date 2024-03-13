@@ -1,5 +1,6 @@
-import { firestore } from "../firebase-admin-config";
+import { getFirestore } from "firebase-admin/firestore";
 
 export function getLinkDocument(uid: string, id: string) {
+    const firestore = getFirestore();
     return firestore.collection("users").doc(uid).collection("links").doc(id);
 }

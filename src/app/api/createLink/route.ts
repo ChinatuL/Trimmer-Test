@@ -1,6 +1,6 @@
 import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { firestore } from "../../lib/firebase/firebase-admin-config";
+import { getFirestore } from "firebase-admin/firestore";
 import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
 
 customInitApp();
@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
                 { error: "Link not found" },
                 { status: 400 }
             );
-        }
+      }
+        const firestore = getFirestore();
         const userRef = firestore.collection("users").doc(uid);
         await userRef.set({ email }, { merge: true });
         const linksRef = userRef.collection("links");
