@@ -8,8 +8,8 @@ customInitApp();
 
 export async function POST(request: NextRequest) {
     try {
-      const result = await getUserUidAndEmail(request);
-      const { uid } = await result.json();
+        const result = await getUserUidAndEmail(request);
+        const { uid } = await result.json();
         const { id, customName } = await request.json();
         if (!id) {
             return NextResponse.json(
