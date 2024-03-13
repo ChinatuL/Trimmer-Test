@@ -1,5 +1,5 @@
 "use client";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, linkWithCredential } from "firebase/auth";
 import { useState } from "react";
 import { auth, provider } from "../lib/firebase/firebase-config";
 import { useRouter } from "next/navigation";
@@ -9,8 +9,7 @@ import { saveUserToLocalStorage } from "../lib/utilities/utils";
 export default function Login() {
     const router = useRouter();
     const [error, setError] = useState("");
-  const { setUser } = useUser();
-  
+    const { user } = useUser();
 
     async function handleSignInWithEmail(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -25,9 +24,8 @@ export default function Login() {
             });
             if (res.ok) {
                 const result = await res.json();
-                console.log(result);
                 setError("");
-                saveUserToLocalStorage(result);
+                saveUserToLocalStorage(result.user);
                 router.replace("/dashboard");
             } else {
                 const errorResponse = await res.json();
@@ -42,8 +40,8 @@ export default function Login() {
 
     async function handleSignInWithGooglePopup() {
         try {
-          const userCredential = await signInWithPopup(auth, provider);
-          saveUserToLocalStorage(userCredential.user);
+            const userCredential = await signInWithPopup(auth, provider);
+            saveUserToLocalStorage(userCredential.user);
             if (!userCredential) {
                 return;
             }

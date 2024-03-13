@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 
 export default function DashboardLayout({
     children,
@@ -7,8 +7,21 @@ export default function DashboardLayout({
 }) {
 
     return (
-        <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-            {children}
-        </main>
+        <>
+            <header>
+                <div>
+                    <Link href='/dashboard'>Home</Link>
+                </div>
+                <div>
+                    <Link href='/links'>Links</Link>
+                </div>
+                <div>
+                    <Link href='/analytics'>Analytics</Link>
+                </div>
+            </header>
+            <main className='flex min-h-screen flex-col items-center justify-between p-24'>
+                {children}
+            </main>
+        </>
     );
 }

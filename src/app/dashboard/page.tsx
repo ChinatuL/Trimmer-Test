@@ -42,7 +42,8 @@ export default function Page() {
             longLink: link,
             shortLink: shortenedLink,
             timestamp: new Date().toISOString(),
-        };
+      };
+      console.log(user)
         const linksRef = doc(db, "users", `${user.uid}`, "links", nanoid());
         await setDoc(linksRef, linkObj, { merge: true });
     }
