@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
         const result = await getUserUidAndEmail(request);
         const { uid } = await result.json();
         const { id, location } = await request.json();
+        const viewObj = { location, date: new Date().toISOString() };
         if (!id) {
             return NextResponse.json(
                 { error: "Select a link to update" },
@@ -25,13 +26,11 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-        // get the clicks array
-        const views = doc.data()?.views;
-        // add an object containing the location and the current date to the clicks array
-        views.push({ location, date: new Date().toISOString() });
-        // update the clicks array in the document
-        await docRef.update({ views });
-        return NextResponse.json({ message: "Click updated" }, { status: 200 });
+      // add to the views array
+        await docRef.update({
+            views: [...doc.data()?.views, viewObj],
+        });
+        return NextResponse.json({ message: "View added" }, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json(
