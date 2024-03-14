@@ -40,6 +40,7 @@ export default function Page() {
             longLink: link,
             shortLink: shortenedLink,
             timestamp: new Date().toISOString(),
+            views: [],
         };
         try {
             const res = await fetch("/api/createLink", {

@@ -1,4 +1,3 @@
-
 export const baseUrl =
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000/";
 
@@ -16,16 +15,16 @@ export function makeUrlShort(length: number) {
     return result;
 }
 
-export function copyLinkToClipboard(url:string) {
-  if (typeof window !== undefined) {
-    navigator.clipboard.writeText(url);
-  }
+export function copyLinkToClipboard(url: string) {
+    if (typeof window !== undefined) {
+        navigator.clipboard.writeText(url);
+    }
 }
 
 export function saveUserToLocalStorage(user: any) {
-  if (typeof window !== undefined) {
-    localStorage.setItem("user", JSON.stringify(user));
-  }
+    if (typeof window !== undefined) {
+        localStorage.setItem("user", JSON.stringify(user));
+    }
 }
 
 export function getUserFromLocalStorage() {
@@ -34,3 +33,9 @@ export function getUserFromLocalStorage() {
     }
 }
 
+export function saveLinkClick() {
+    let clicks = 0;
+    clicks += 1;
+    console.log(clicks);
+    return clicks;
+}

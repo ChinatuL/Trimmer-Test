@@ -1,5 +1,5 @@
 "use client";
-import { signInWithPopup, linkWithCredential } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { auth, provider } from "../lib/firebase/firebase-config";
 import { useRouter } from "next/navigation";

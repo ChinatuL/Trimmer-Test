@@ -37,6 +37,7 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 
     if (request.nextUrl.pathname.startsWith("/as/")) {
         const session = request.cookies.get("session");
+        console.log(request.geo?.country);
         const shortLink = request.nextUrl.pathname.split("/")[2];
         const links = await fetch(`${baseUrl}/api/authLinks`, {
             next: { revalidate: 0 },

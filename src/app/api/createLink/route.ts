@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
                 { error: "Link not found" },
                 { status: 400 }
             );
-      }
+        }
         const firestore = getFirestore();
         const userRef = firestore.collection("users").doc(uid);
         await userRef.set({ email }, { merge: true });
