@@ -1,8 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
-import { baseUrl, copyLinkToClipboard } from "@/app/lib/utilities/utils";
-import LinksHeader from "@dashboard/links/links-header";
 import LinksList from "@dashboard/links/links-list";
 export default function Page() {
     const [links, setLinks] = useState([] as any[]);
@@ -28,18 +25,6 @@ export default function Page() {
     }
 
     
-
-    function openDeleteModal(id: string) {
-        setIsDeleting(true);
-        setLinkId(id);
-        console.log(id);
-    }
-
-    function openModal(id: string) {
-        setIsUpdating(true);
-        setLinkId(id);
-        console.log(id);
-    }
 
     async function updateLink(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
