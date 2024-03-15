@@ -8,6 +8,13 @@ import {
 import { db } from "./lib/firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
+import Header from "@ui/header/header";
+import HomeComponent from "@ui/home/home";
+import Features from "@ui/features/features";
+import Pricing from "@ui/pricing/pricing";
+import Reviews from "@ui/reviews/reviews";
+import CallToAction from "@ui/call-to-action";
+import Footer from "@ui/footer/footer";
 
 export default function Home() {
     const [shortLink, setShortLink] = useState("");
@@ -45,23 +52,16 @@ export default function Home() {
     }
 
     return (
-        <main className='flex min-h-screen flex-col items-center p-24'>
-            <h1>Welcome to Trimmer</h1>
-            <form onSubmit={handleSubmit}>
-                <div className='flex gap-4'>
-                    <label htmlFor='link'>Email</label>
-                    <input
-                        type='text'
-                        name='link'
-                        id='link'
-                        placeholder='Enter a link to shorten'
-                        className='bg-transparent border border-zinc-50 px-4 py-2'
-                    />
-                </div>
-                <button className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'>
-                    Trim
-                </button>
-            </form>
+        <div className='w-full'>
+            <Header />
+            <main>
+                <HomeComponent handleSubmit={handleSubmit} />
+                <Features />
+                <Pricing />
+                <Reviews />
+                <CallToAction />
+            </main>
+            <Footer />
             {shortLink && (
                 <div className='flex gap-8 items-center mt-8'>
                     <p>
@@ -71,6 +71,6 @@ export default function Home() {
                     <QRCodeSVG value={longLink} />
                 </div>
             )}
-        </main>
+        </div>
     );
 }
