@@ -2,7 +2,6 @@
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../lib/firebase/firebase-config";
-import { addDoc } from "firebase/firestore";
 import {
     baseUrl,
     makeUrlShort,

@@ -16,6 +16,9 @@ import twitter from "@icons/twitter-white.svg";
 import linkedIn from "@icons/linkedin-white.svg";
 import instagram from "@icons/instagram.svg";
 import facebook from "@icons/facebook.svg";
+import eyeIcon from "@icons/eye.svg";
+import editIcon from "@icons/edit.svg";
+import trashIcon from "@icons/trash.svg";
 
 export const links = [
     {
@@ -273,7 +276,13 @@ export const footerLinks = [
             "Cookie Policy",
             "Terms of Service",
             "Acceptable Use Policy",
-            "Code of Conduct"
+            "Code of Conduct",
         ],
     },
+];
+
+export const actionButtons = [
+    { id: 1, img: eyeIcon, name: "view link details" },
+    { id: 2, img: editIcon, name: "edit link" },
+    { id: 3, img: trashIcon, name: "delete link" },
 ];

@@ -1,33 +1,33 @@
 "use client";
-import { links } from "@lib/data";
 import { useState } from "react";
 import LinkComponent from "./link";
 import LinkDetails from "./link-details";
 
 type LinkDetails = {
     id: number;
-    longUrl: string;
-    shortUrl: string;
-    date: string;
-    clicks: number;
+    longLink: string;
+    shortLink: string;
+    timestamp: string;
+    views: { date: string; location: string }[];
 };
 
-export default function LinksList() {
-    const [linksList, setLinksList] = useState(links);
+export default function LinksList({ links }: { links: any[] }) {
     const [linkDetails, setLinkDetails] = useState({} as LinkDetails);
     const [showLink, setShowLink] = useState(false);
 
+
     function handleLinkDetails(id: number) {
-        // search in links array for the link with the same id as the react key of the clicked link
-        const link = linksList.find((link) => link.id === id);
-        if (!link) return;
-        setLinkDetails(link);
-        setShowLink(true);
+        if (links) {
+            const link = links.find((link) => link?.id === id);
+            if (!link) return;
+            setLinkDetails(link);
+            setShowLink(true);
+        }
     }
 
     return (
         <div>
-            {linksList.map((link) => {
+            {links.map((link) => {
                 return (
                     <LinkComponent
                         key={link.id}

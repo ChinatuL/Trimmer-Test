@@ -1,26 +1,16 @@
-import Link from "next/link";
-
+import SideNav from "@dashboard/side-nav";
+import DashboardHeader from "@dashboard/header";
 export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-
     return (
-        <div className="grid grid-cols-[auto_1fr] h-full w-full">
-            <header className="flex flex-col gap-2 h-full border-r border-r-purple-500 px-8 py-4">
-                <div>
-                    <Link href='/dashboard' className="hover:text-purple-500">Home</Link>
-                </div>
-                <div>
-                    <Link href='/dashboard/links' className="hover:text-purple-500">Links</Link>
-                </div>
-                <div>
-                    <Link href='/dashboard/analytics' className="hover:text-purple-500">Analytics</Link>
-                </div>
-            </header>
-            <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-                {children}
+        <div className='grid grid-cols-[auto_1fr] w-full min-h-[100vh] h-full bg-gradient-to-tr from-darkPurple from-10% via-darkBlue via-40% to-darkPurple to-95% text-zinc-50 pr-4'>
+            <SideNav />
+            <main className='grid grid-rows-[auto_1fr]'>
+                <DashboardHeader />
+                <section>{children}</section>
             </main>
         </div>
     );
