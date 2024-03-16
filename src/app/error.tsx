@@ -1,6 +1,8 @@
-"use client"; // Error components must be Client Components
+"use client";
 
 import { useEffect } from "react";
+import errorBg from "@icons/global-error.svg";
+import Image from "next/image";
 
 export default function Error({
     error,
@@ -10,21 +12,19 @@ export default function Error({
     reset: () => void;
 }) {
     useEffect(() => {
-        // Log the error to an error reporting service
         console.error(error);
     }, [error]);
 
     return (
-        <div className="bg-auth-bg bg-cover w-full h-[100vh] text-zinc-50">
-            <h2>Something went wrong!</h2>
-            <button
-                onClick={
-                    // Attempt to recover by trying to re-render the segment
-                    () => reset()
-                }
-            >
-                Try again
-            </button>
+        <div className='flex justify-center items-center bg-auth-bg bg-cover w-full h-[100vh] text-zinc-50'>
+            <div className='flex flex-col justify-center items-center py-8 px-8 rounded bg-darkBlue text-zinc-50 w-[80vw] h-[90vh] mx-auto'>
+                <Image src={errorBg} alt='' />
+                <div className="pt-8 text-center">
+                    <h1 className="font-semibold text-3xl">OOPS!</h1>
+                    <p className="text-lg pb-4">An error occurred but it&apos;s not your fault</p>
+                    <button onClick={() => reset()} className="px-4 py-2 bg-purple rounded-lg hover:opacity-70 transitionEase">Try again</button>
+                </div>
+            </div>
         </div>
     );
 }
