@@ -8,13 +8,14 @@ customInitApp();
 export async function GET(request: NextRequest) {
     try {
         const result = await getUserUidAndEmail(request);
-      const { uid } = await result.json();
-      const firestore = getFirestore();
+        const { uid } = await result.json();
+        const firestore = getFirestore();
         const usersCollection = firestore
             .collection("users")
             .doc(uid)
             .collection("links");
-        const links = await usersCollection.get();
+        const orderQuery = usersCollection.orderBy("timestamp", "desc");
+        const links = await orderQuery.get();
         const linksData = links.docs.map((doc) => {
             // spread the data and add the id
             return { ...doc.data(), id: doc.id };

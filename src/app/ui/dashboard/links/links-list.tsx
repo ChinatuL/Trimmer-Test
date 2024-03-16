@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LinkComponent from "./link";
 import LinkDetails from "./link-details";
 import EditLinkModal from "./edit-link-modal";
@@ -13,12 +13,18 @@ type LinkDetails = {
     views: { date: string; location: string }[];
 };
 
-export default function LinksList({ links }: { links: any[] }) {
+type LinkListProps = {
+    links: any[];
+    getLinks: () => Promise<void>;
+};
+
+export default function LinksList({ links, getLinks }: LinkListProps) {
     const [linkDetails, setLinkDetails] = useState({} as LinkDetails);
     const [showLink, setShowLink] = useState(false);
     const [linkId, setLinkId] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [error, setError] = useState("");
 
     function handleLinkDetails(id: string) {
         if (links) {
@@ -32,13 +38,56 @@ export default function LinksList({ links }: { links: any[] }) {
     function openEditModal(id: string) {
         setIsEditing(true);
         setLinkId(id);
-        console.log(id);
     }
 
     function openDeleteModal(id: string) {
         setIsDeleting(true);
         setLinkId(id);
+    }
+
+    async function editLink(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const customName = new FormData(e.currentTarget).get("custom-name");
+        const id = linkId;
         console.log(id);
+        try {
+            const res = await fetch("/api/updateLink", {
+                method: "POST",
+                body: JSON.stringify({ id, customName }),
+            });
+            if (res.ok) {
+                const result = await res.json();
+                console.log(result);
+                setLinkId("");
+                await getLinks();
+                setIsEditing(false);
+            } else {
+                const errResponse = await res.json();
+                console.error(errResponse);
+                setError(errResponse.error);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteLink() {
+        const id = linkId;
+        try {
+            const res = await fetch("/api/deleteLink", {
+                method: "DELETE",
+                body: JSON.stringify({ id }),
+            });
+            if (res.ok) {
+                const result = await res.json();
+                console.log(result);
+                setLinkId("");
+                await getLinks();
+                setIsDeleting(false);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -72,7 +121,11 @@ export default function LinksList({ links }: { links: any[] }) {
                         isEditing && "backdrop-blur"
                     }`}
                 >
-                    <EditLinkModal setIsEditing={setIsEditing} />
+                    <EditLinkModal
+                        setIsEditing={setIsEditing}
+                        editLink={editLink}
+                        error={error}
+                    />
                 </div>
             )}
             {isDeleting && (
@@ -81,7 +134,10 @@ export default function LinksList({ links }: { links: any[] }) {
                         isDeleting && "backdrop-blur"
                     }`}
                 >
-                    <DeleteLinkModal setIsDeleting={setIsDeleting} />
+                    <DeleteLinkModal
+                        setIsDeleting={setIsDeleting}
+                        deleteLink={deleteLink}
+                    />
                 </div>
             )}
         </div>

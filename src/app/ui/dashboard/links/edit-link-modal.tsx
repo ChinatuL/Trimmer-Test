@@ -2,11 +2,18 @@ import { baseUrl } from "@lib/utilities/utils";
 import Image from "next/image";
 import closeIcon from "@icons/close.svg";
 import { Dispatch, SetStateAction } from "react";
+
+type EditLinkModalProps = {
+    setIsEditing: Dispatch<SetStateAction<boolean>>;
+    editLink: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+    error: string;
+};
+
 export default function EditLinkModal({
     setIsEditing,
-}: {
-    setIsEditing: Dispatch<SetStateAction<boolean>>;
-}) {
+    editLink,
+    error,
+}: EditLinkModalProps) {
     return (
         <div className='flex flex-col gap-4 w-[35rem]  bg-zinc-50 text-[#131033] rounded-xl p-8'>
             <div className='flex justify-between items-center w-full'>
@@ -15,7 +22,7 @@ export default function EditLinkModal({
                     <Image src={closeIcon} alt='Close link details' />
                 </button>
             </div>
-            <form className='flex flex-col gap-4 w-full'>
+            <form className='flex flex-col gap-4 w-full' onSubmit={editLink}>
                 <div className='flex gap-4 w-full'>
                     <div className='flex flex-col'>
                         <label htmlFor='domain'>Domain:</label>
@@ -33,8 +40,11 @@ export default function EditLinkModal({
                             type='text'
                             placeholder='enter link name'
                             name='custom-name'
-                            className='border border-[#9C98CB] rounded-lg p-2 text-sm text-darkBlue focus:border-2 focus:border-purple focus:outline-none'
+                            className={`border  rounded-lg p-2 text-sm text-darkBlue focus:border-2 focus:border-purple focus:outline-none ${
+                                error ? "border-red-700" : "border-[#9C98CB]"
+                            }`}
                         />
+                        <p className=' text-sm text-red-700'>{error}</p>
                     </div>
                 </div>
                 <button

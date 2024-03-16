@@ -1,7 +1,7 @@
-import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
+import { customInitApp } from "@lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
 import { getFirestore } from "firebase-admin/firestore";
-import { deleteOldLinks } from "@/app/lib/firebase/firestore/links";
+import { deleteOldLinks } from "@lib/firebase/firestore/links";
 
 customInitApp();
 export async function GET(request: NextRequest) {
