@@ -1,8 +1,27 @@
+"use client"
+
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { auth } from "@firebase/firebase-config";
+import { saveUserToLocalStorage, baseUrl } from "@lib/utilities/utils";
 import Link from "next/link";
 import TrimmerLogo from "@ui/trimmer-logo";
 import NavLinks from "@dashboard/nav-links";
 
 export default function SideNav() {
+    const router = useRouter();
+
+    async function logout() {
+        await signOut(auth);
+        const response = await fetch(`${baseUrl}/api/logout`, {
+            method: "POST",
+        });
+        if (response.status === 200) {
+            saveUserToLocalStorage(null);
+            router.push("/login");
+        }
+    }
+
     return (
         <div className='h-full border-r-2 border-r-purple rounded-xl px-8 pt-4 bg-gradient-to-b from-darkBlue from-40% to-darkPurple to-100%'>
             <nav className='flex flex-col gap-8'>
@@ -13,7 +32,10 @@ export default function SideNav() {
                 </div>
                 <div className='flex flex-col gap-6'>
                     <NavLinks />
-                    <button className='flex gap-4 items-center text-lg text-zinc-50 hover:text-purple transitionEase'>
+                    <button
+                        onClick={logout}
+                        className='flex gap-4 items-center text-lg text-zinc-50 hover:text-purple transitionEase'
+                    >
                         <svg
                             className='stroke-zinc-50 hover:stroke-purple'
                             width='32'

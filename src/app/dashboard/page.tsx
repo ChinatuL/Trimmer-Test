@@ -1,33 +1,21 @@
 "use client";
-import { signOut } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { auth } from "../lib/firebase/firebase-config";
+
 import {
     baseUrl,
     makeUrlShort,
     copyLinkToClipboard,
-    saveUserToLocalStorage,
 } from "../lib/utilities/utils";
 import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { useUser } from "../context/user-context";
 
 export default function Page() {
-    const router = useRouter();
+    
     const [shortLink, setShortLink] = useState("");
     const [longLink, setLongLink] = useState("");
     const { user } = useUser();
 
-    async function logout() {
-        await signOut(auth);
-        const response = await fetch(`${baseUrl}/api/logout`, {
-            method: "POST",
-        });
-        if (response.status === 200) {
-            saveUserToLocalStorage(null);
-            router.push("/login");
-        }
-    }
+    
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -66,12 +54,6 @@ export default function Page() {
     return (
         <div>
             <h1>Dashboard</h1>
-            <button
-                className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-                onClick={logout}
-            >
-                Logout
-            </button>
             <div className='mt-10'>
                 <form onSubmit={handleSubmit}>
                     <div className='flex gap-4'>
@@ -100,18 +82,7 @@ export default function Page() {
                         >
                             Copy
                         </button>
-                        <button
-                            onClick={deleteLink}
-                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-                        >
-                            Delete
-                        </button>
-                        <button
-                            onClick={deleteLink}
-                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-                        >
-                            Edit
-                        </button>
+                        
                     </div>
                 )}
             </div>
