@@ -2,8 +2,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
-import { copyLinkToClipboard, formatHomePageLink } from "@lib/utilities/utils";
+import {
+    copyLinkToClipboard,
+    formatHomePageLink,
+    shareLink,
+} from "@lib/utilities/utils";
 import copyIcon from "@icons/copy.svg";
+import shareIcon from "@icons/share.svg";
 
 export default function ShortenedLink({ shortLink }: { shortLink: string }) {
     const [buttonText, setButtonText] = useState("Copy");
@@ -31,12 +36,18 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
                 <div className='flex gap-2'>
                     <button
                         onClick={handleCopy}
-                        className='flex items-center gap-1 py-1 px-2 border border-purple rounded transitionEase hover:opacity-80'
+                        className='flex items-center gap-1 py-1 px-2 border border-purple rounded transitionEase hover:opacity-70'
                     >
                         <Image src={copyIcon} alt='' />
                         {buttonText}
                     </button>
-                    <button>share</button>
+                    <button
+                        onClick={() => shareLink(formattedLink)}
+                        className='flex items-center gap-1 py-1 px-2 border border-purple rounded transitionEase hover:opacity-70'
+                    >
+                        <Image src={shareIcon} alt='' />
+                        Share
+                    </button>
                 </div>
             </div>
             <QRCodeSVG value={shortLink} size={60} className='cursor-pointer' />

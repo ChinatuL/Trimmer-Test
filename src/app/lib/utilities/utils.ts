@@ -71,3 +71,15 @@ export function validateFormFields(
     }
     return error;
 }
+
+export async function shareLink(formattedLink:string) {
+    try {
+      await navigator.share({
+        title: formattedLink,
+        text: "Check out this shortened link",
+        url: formattedLink,
+      })
+    } catch (error) {
+      console.error("Error sharing:", error)
+    }
+  }
