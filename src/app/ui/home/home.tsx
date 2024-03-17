@@ -2,11 +2,18 @@ import Image from "next/image";
 import bigLink from "@images/big-link.png";
 import bigScissor from "@images/big-scissor.png";
 import LinkShortenerForm from "./link-shortener-form";
+import ShortenedLink from "./shortened-link";
+
+type HomeComponentProps = {
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+    shortLink: string;
+};
+
 export default function HomeComponent({
     handleSubmit,
-}: {
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-}) {
+    shortLink,
+}: HomeComponentProps) {
+
     return (
         <div className='flex justify-center items-center px-8 md:px-16 lg:px-24 h-[calc(100vh-3.5rem)] bg-gradient-to-r from-darkBlue from-35% to-darkPurple to-100%'>
             <Image src={bigLink} alt='' className='absolute top-16 left-4' />
@@ -23,6 +30,7 @@ export default function HomeComponent({
                         shareable with our advanced URL shortening service.
                     </p>
                     <LinkShortenerForm handleSubmit={handleSubmit} />
+                    {shortLink && <ShortenedLink shortLink={shortLink} />}
                 </div>
                 <div className='hidden lg:w-[35%] lg:h-full lg:grid lg:place-items-center'>
                     <Image src={bigScissor} alt='' className='object-contain' />
