@@ -1,4 +1,4 @@
-import { baseUrl } from "@lib/utilities/utils";
+import { baseUrl, enableScroll } from "@lib/utilities/utils";
 import Image from "next/image";
 import closeIcon from "@icons/close.svg";
 import { Dispatch, SetStateAction } from "react";
@@ -14,16 +14,21 @@ export default function EditLinkModal({
     editLink,
     error,
 }: EditLinkModalProps) {
+    function closeEditModal() {
+        setIsEditing(false);
+        enableScroll();
+    }
+
     return (
-        <div className='flex flex-col gap-4 w-[35rem]  bg-zinc-50 text-[#131033] rounded-xl p-8'>
+        <div className='flex flex-col gap-4 w-[90vw] md:w-[35rem] bg-zinc-50 text-[#131033] rounded-xl p-8'>
             <div className='flex justify-between items-center w-full'>
                 <h2 className='font-semibold text-xl'>Edit Link</h2>
-                <button onClick={() => setIsEditing(false)}>
+                <button onClick={closeEditModal}>
                     <Image src={closeIcon} alt='Close link details' />
                 </button>
             </div>
             <form className='flex flex-col gap-4 w-full' onSubmit={editLink}>
-                <div className='flex gap-4 w-full'>
+                <div className='flex flex-col md:flex-row gap-4 w-full'>
                     <div className='flex flex-col'>
                         <label htmlFor='domain'>Domain:</label>
                         <input

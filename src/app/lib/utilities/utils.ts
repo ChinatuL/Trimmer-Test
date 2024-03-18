@@ -92,7 +92,7 @@ export function getHeadingFromPath(pathname: string) {
     return heading;
 }
 
-export function disableScoll() {
+export function disableScroll() {
     if (typeof window !== "undefined" && window.document) {
         document.body.style.overflow = "hidden";
     }

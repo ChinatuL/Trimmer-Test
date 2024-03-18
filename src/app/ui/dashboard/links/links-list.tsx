@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { disableScroll } from "@lib/utilities/utils";
 import LinkComponent from "./link";
 import LinkDetails from "./link-details";
 import EditLinkModal from "./edit-link-modal";
@@ -32,17 +33,20 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
             if (!link) return;
             setLinkDetails(link);
             setShowLink(true);
+            disableScroll();
         }
     }
 
     function openEditModal(id: string) {
         setIsEditing(true);
         setLinkId(id);
+        disableScroll();
     }
 
     function openDeleteModal(id: string) {
         setIsDeleting(true);
         setLinkId(id);
+        disableScroll();
     }
 
     async function editLink(e: React.FormEvent<HTMLFormElement>) {

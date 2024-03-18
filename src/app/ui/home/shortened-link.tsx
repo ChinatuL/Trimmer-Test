@@ -6,7 +6,7 @@ import {
     copyLinkToClipboard,
     formatHomePageLink,
     shareLink,
-    disableScoll,
+    disableScroll,
 } from "@lib/utilities/utils";
 import copyIcon from "@icons/copy.svg";
 import shareIcon from "@icons/share.svg";
@@ -25,7 +25,7 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
 
     function openQrCodeModal() {
         setOpenQrCode(true);
-        disableScoll();
+        disableScroll();
     }
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
     return (
         <>
             {openQrCode && (
-                <div className='absolute top-0 z-50 flex justify-center items-center p-8 w-[70%] h-full bg-zinc-50 backdrop-blur-sm'>
+                <div className='fixed z-10 left-0 top-0 w-[100vw] h-[100vh] flex justify-center items-center p-8 backdrop-blur-sm'>
                     <QrCodeModal
                         shortLink={shortLink}
                         setOpenQrCode={setOpenQrCode}
