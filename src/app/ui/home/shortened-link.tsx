@@ -33,7 +33,7 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
                 <a href={formattedLink} rel='noreferrer' target='_blank'>
                     <p className='underline'>{formattedLink}</p>
                 </a>
-                <div className='flex gap-2'>
+                <div className='flex items-center gap-2'>
                     <button
                         onClick={handleCopy}
                         className='flex items-center gap-1 py-1 px-2 border border-purple rounded transitionEase hover:opacity-70'
@@ -48,9 +48,13 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
                         <Image src={shareIcon} alt='' />
                         Share
                     </button>
+                    <QRCodeSVG
+                        value={shortLink}
+                        size={30}
+                        className='cursor-pointer'
+                    />
                 </div>
             </div>
-            <QRCodeSVG value={shortLink} size={60} className='cursor-pointer' />
         </div>
     );
 }
