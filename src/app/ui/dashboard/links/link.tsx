@@ -29,8 +29,8 @@ export default function LinkComponent({
     return (
         <div className='w-full px-4'>
             <div className='flex flex-col gap-2 items-center border-b-2 border-b-[#262165] px-4 pt-4 pb-1'>
-                <div className='grid grid-cols-5 items-center  w-full'>
-                    <div className=''>
+                <div className='flex flex-col gap-2 lg:grid lg:grid-cols-5 lg:items-center lg:gap-0 w-full'>
+                    <div className='order-1 lg:order-none'>
                         <p
                             className='truncate justify-self-start'
                             id={shortLink}
@@ -38,13 +38,13 @@ export default function LinkComponent({
                             {`${baseUrl}as/${shortLink}`}
                         </p>
                     </div>
-                    <div className='justify-self-center'>
+                    <div className='justify-self-center order-1 lg:order-none'>
                         <QRCodeComponent
                             value={`${baseUrl}as/${shortLink}`}
                             size={70}
                         />
                     </div>
-                    <div className='justify-self-center'>
+                    <div className='justify-self-center order-1 lg:order-none'>
                         <div className='flex gap-2'>
                             <p>Created:</p>
                             <p>{formattedDate}</p>
@@ -54,7 +54,7 @@ export default function LinkComponent({
                             <p>{views.length}</p>
                         </div>
                     </div>
-                    <div className='justify-self-center'>
+                    <div className='flex gap-2 lg:flex-col lg:gap-0 justify-self-center order-1 lg:order-none'>
                         <p>Last Location:</p>
                         <p>
                             {!views.length
@@ -62,7 +62,7 @@ export default function LinkComponent({
                                 : views[views.length - 1].location}
                         </p>
                     </div>
-                    <div className='flex gap-3 justify-center items-center w-full'>
+                    <div className='flex gap-3 justify-end  lg:justify-center items-center w-full'>
                         <button
                             className='hover:scale-125 transitionEase'
                             onClick={() => handleLinkDetails(id)}

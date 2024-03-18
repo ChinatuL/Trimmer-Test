@@ -19,16 +19,16 @@ export default function Navlink({
 
     return (
         <Link href={href} className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex flex-col lg:flex-row lg:gap-4 items-center'>
                 {pathname === href ? (
                     <Image src={activeIcon} alt='' />
                 ) : (
                     <Image src={icon} alt='' />
                 )}
                 <span
-                    className={`font text-lg hover:text-purple transitionEase ${
+                    className={`font text-sm lg:text-lg hover:text-purple transitionEase ${
                         pathname === href
-                            ? "text-purple border-b-[3px] border-b-purple"
+                            ? "text-purple lg:border-b-[3px] border-b-purple"
                             : "text-zinc-50"
                     }`}
                 >

@@ -26,7 +26,7 @@ export function formatLink(link: string) {
 }
 
 export function formatHomePageLink(link: string) {
-  return `${baseUrl}s/${link}`;
+    return `${baseUrl}s/${link}`;
 }
 
 export function saveUserToLocalStorage(user: any) {
@@ -72,14 +72,22 @@ export function validateFormFields(
     return error;
 }
 
-export async function shareLink(formattedLink:string) {
+export async function shareLink(formattedLink: string) {
     try {
-      await navigator.share({
-        title: formattedLink,
-        text: "Check out this shortened link",
-        url: formattedLink,
-      })
+        await navigator.share({
+            title: formattedLink,
+            url: formattedLink,
+        });
     } catch (error) {
-      console.error("Error sharing:", error)
+        console.error("Error sharing:", error);
     }
-  }
+}
+
+export function getHeadingFromPath(pathname: string) {
+    let heading = "Overview";
+    if (pathname !== "/dashboard") {
+        const pathArray = pathname.split("/");
+        heading = pathArray[2].charAt(0).toUpperCase() + pathArray[2].slice(1);
+    }
+    return heading;
+}

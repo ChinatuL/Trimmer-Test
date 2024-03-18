@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -23,18 +23,18 @@ export default function SideNav() {
     }
 
     return (
-        <div className='h-full border-r-2 border-r-purple rounded-xl px-8 pt-4 bg-gradient-to-b from-darkBlue from-40% to-darkPurple to-100%'>
+        <div className='fixed bottom-0 z-20 w-full border-t pb-4 border-t-purple lg:w-auto lg:relative lg:h-full lg:border-r-2 lg:border-r-purple lg:rounded-xl lg:border-t-0 px-8 pt-4 lg:pb-0 bg-darkBlue lg:bg-gradient-to-b from-darkBlue from-40% to-darkPurple to-100%'>
             <nav className='flex flex-col gap-8'>
-                <div>
+                <div className='hidden lg:block'>
                     <Link href='/'>
                         <TrimmerLogo />
                     </Link>
                 </div>
-                <div className='flex flex-col gap-6'>
+                <div className='flex lg:flex-col lg:gap-6'>
                     <NavLinks />
                     <button
                         onClick={logout}
-                        className='flex gap-4 items-center text-lg text-zinc-50 hover:text-purple transitionEase'
+                        className='hidden lg:flex flex-col lg:flex-row lg:gap-4 items-center text-lg text-zinc-50 hover:text-purple transitionEase'
                     >
                         <svg
                             className='stroke-zinc-50 hover:stroke-purple'
@@ -51,7 +51,7 @@ export default function SideNav() {
                                 strokeLinejoin='round'
                             />
                         </svg>
-                        <span className=''>Logout</span>
+                        <span className='hidden lg:block'>Logout</span>
                     </button>
                 </div>
             </nav>
