@@ -91,3 +91,15 @@ export function getHeadingFromPath(pathname: string) {
     }
     return heading;
 }
+
+export function disableScoll() {
+    if (typeof window !== "undefined" && window.document) {
+        document.body.style.overflow = "hidden";
+    }
+}
+
+export function enableScroll() {
+    if (typeof window !== "undefined" && window.document) {
+        document.body.style.overflow = "auto";
+    }
+}
