@@ -8,7 +8,7 @@ export default function RecentActivities({ links }: { links: Links[] }) {
 
     useEffect(() => {
         // get the last 2 links created
-        const lastTwoLinks = links.slice(-2);
+        const lastTwoLinks = links.slice(-3);
         setRecentLinks(lastTwoLinks);
     }, [links]);
 

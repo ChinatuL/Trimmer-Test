@@ -1,90 +1,54 @@
 "use client";
-
-import {
-    baseUrl,
-    makeUrlShort,
-    copyLinkToClipboard,
-} from "../lib/utilities/utils";
-import { useState } from "react";
-import { QRCodeSVG } from "qrcode.react";
+import { useState, useEffect } from "react";
+import BarChartComponent from "@dashboard/analytics/bar-chart";
+import StatsCard from "@dashboard/stats-card";
+import LinkShortenerForm from "@dashboard/link-shortener-form";
+import RecentActivities from "@dashboard/analytics/recent-activities";
+import QrCodeComponent from "@dashboard/qr-code";
+import { getTotalClicks, getTotalLinks } from "@lib/actions";
 import { useUser } from "../context/user-context";
+import { Links } from "@lib/definitions";
 
 export default function Page() {
-    
-    const [shortLink, setShortLink] = useState("");
-    const [longLink, setLongLink] = useState("");
-    const { user } = useUser();
+    const [links, setLinks] = useState<Links[]>([]);
+    const [totalLinks, setTotalLinks] = useState(0);
+    const [totalClicks, setTotalClicks] = useState(0);
 
-    
-
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const link = new FormData(e.currentTarget).get("link") as string;
-        setLongLink(link);
-        const shortenedLink = makeUrlShort(6);
-        setShortLink(shortenedLink);
-        let linkObj = {
-            longLink: link,
-            shortLink: shortenedLink,
-            timestamp: new Date().toISOString(),
-            views: [],
-        };
-        try {
-            const res = await fetch("/api/createLink", {
-                method: "POST",
-                body: JSON.stringify({ linkObj }),
-            });
-            if (res.ok) {
-                const result = await res.json();
-                console.log(result);
+    useEffect(() => {
+        async function getLinks() {
+            try {
+                const res = await fetch("/api/authLinks");
+                if (res.ok) {
+                    const result = await res.json();
+                    const links = result.links;
+                    setLinks(links);
+                    setTotalLinks(getTotalLinks(links));
+                    setTotalClicks(getTotalClicks(links));
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
-    }
-
-    function handleCopy(e: React.MouseEvent<HTMLButtonElement>) {
-        copyLinkToClipboard(`${baseUrl}as/${shortLink}`);
-    }
-
-    function deleteLink() {
-        console.log("link deleted");
-    }
+        getLinks();
+    }, []);
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <div className='mt-10'>
-                <form onSubmit={handleSubmit}>
-                    <div className='flex gap-4'>
-                        <label htmlFor='link'>Link</label>
-                        <input
-                            type='text'
-                            name='link'
-                            id='link'
-                            placeholder='Enter a link to shorten'
-                            className='bg-transparent border border-zinc-50 px-4 py-2'
-                        />
-                    </div>
-                    <button className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'>
-                        Trim
-                    </button>
-                </form>
-                {shortLink && (
-                    <div className='flex gap-8 items-center mt-8'>
-                        <p>
-                            Short Link : {baseUrl}as/{shortLink}
-                        </p>
-                        <QRCodeSVG value={longLink} />
-                        <button
-                            onClick={handleCopy}
-                            className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-                        >
-                            Copy
-                        </button>
-                        
-                    </div>
-                )}
+        <div className="grid grid-cols-1 gap-8 bg-darkBlue px-4 py-6 rounded-xl'">
+            <div className='grid grid-cols-1 lg:grid-cols-[1fr_350px] bg-analyticsBg gap-4 py-4 px-4 rounded-xl'>
+                <div>
+                    <BarChartComponent links={links} />
+                </div>
+                <div className='grid grid-cols-1 order-first lg:order-none gap-4 w-full'>
+                    <StatsCard
+                        totalClicks={totalClicks}
+                        totalLinks={totalLinks}
+                    />
+                    <LinkShortenerForm />
+                </div>
+            </div>
+            <div className='grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6'>
+                <RecentActivities links={links} />
+                <QrCodeComponent />
             </div>
         </div>
     );
