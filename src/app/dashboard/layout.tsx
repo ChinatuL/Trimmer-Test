@@ -10,7 +10,7 @@ export default function DashboardLayout({
             <SideNav />
             <main className='grid grid-rows-[auto_1fr] mb-24 lg:pb-0'>
                 <DashboardHeader />
-                <section>{children}</section>
+                <section className="max-w-[1300px] h-full min-h-[100vh]">{children}</section>
             </main>
         </div>
     );
