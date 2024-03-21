@@ -2,12 +2,17 @@
 import QRCodeComponent from "@ui/qr-code";
 import { baseUrl } from "@lib/utilities/utils";
 import Image from "next/image";
-import eyeIcon from "@icons/eye.svg";
+import eyeIcon from "@icons/eye-purple.svg";
 import editIcon from "@icons/edit.svg";
 import trashIcon from "@icons/trash.svg";
+import linkIcon from "@icons/link-purple.svg";
+import clockIcon from "@icons/clock.svg";
+import locationIcon from "@icons/location.svg";
+import clicksIcon from "@icons/clicks.svg";
 
 type LinkComponentProps = {
     id: string;
+    longLink: string;
     shortLink: string;
     timestamp: string;
     views: { date: string; location: string }[];
@@ -18,6 +23,7 @@ type LinkComponentProps = {
 
 export default function LinkComponent({
     id,
+    longLink,
     shortLink,
     timestamp,
     views,
@@ -28,9 +34,10 @@ export default function LinkComponent({
     const formattedDate = new Date(timestamp).toLocaleString().split(",")[0];
     return (
         <div className='w-full px-4'>
-            <div className='flex flex-col gap-2 items-center border-b-2 border-b-[#262165] px-4 pt-4 pb-1'>
-                <div className='flex flex-col gap-2 lg:grid lg:grid-cols-5 lg:items-center lg:gap-0 w-full'>
-                    <div className='order-1 lg:order-none'>
+            <div className='flex flex-col gap-2 items-center border-b border-b-purple rounded-xl px-4 pt-4 pb-1'>
+                <div className='flex flex-col gap-2 lg:grid lg:grid-cols-4 lg:items-center lg:gap-0 w-full'>
+                    <div className='flex gap-2'>
+                        <Image src={linkIcon} alt='Shortened Link' />
                         <p
                             className='truncate justify-self-start'
                             id={shortLink}
@@ -38,24 +45,18 @@ export default function LinkComponent({
                             {`${baseUrl}as/${shortLink}`}
                         </p>
                     </div>
-                    <div className='justify-self-center order-1 lg:order-none'>
-                        <QRCodeComponent
-                            value={`${baseUrl}as/${shortLink}`}
-                            size={70}
-                        />
-                    </div>
-                    <div className='justify-self-center order-1 lg:order-none'>
+                    <div className='justify-self-center flex flex-col gap-2'>
                         <div className='flex gap-2'>
-                            <p>Created:</p>
+                            <Image src={clockIcon} alt='Created at' />
                             <p>{formattedDate}</p>
                         </div>
                         <div className='flex gap-2'>
-                            <p>Clicks:</p>
+                            <Image src={clicksIcon} alt='Clicks' />
                             <p>{views.length}</p>
                         </div>
                     </div>
-                    <div className='flex gap-2 lg:flex-col lg:gap-0 justify-self-center order-1 lg:order-none'>
-                        <p>Last Location:</p>
+                    <div className='flex gap-2 justify-self-center'>
+                        <Image src={locationIcon} alt='Last Location' />
                         <p>
                             {!views.length
                                 ? "none"

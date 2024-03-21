@@ -7,23 +7,6 @@ input:-webkit-autofill:focus {
     transition: background-color 0s 600000s, color 0s 600000s !important;
 }
 
-/* make custom scrollbar for entire webpage*/
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1d0138;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #9d37ed;
-    border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #bb71f4;
-}
 
 .react-calendar {
     /* width: 300px; */

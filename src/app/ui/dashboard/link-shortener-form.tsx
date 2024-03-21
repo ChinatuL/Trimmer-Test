@@ -3,18 +3,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import { makeUrlShort } from "@lib/utilities/utils";
+import LinkDetails from "./links/link-details";
 import arrowIcon from "@icons/arrow.svg";
 import ButtonSpinner from "../button-spinner";
 
 export default function LinkShortenerForm() {
     const router = useRouter();
+    const [shortLink, setShortLink] = useState("");
     const [isPending, setIsPending] = useState(false);
+    const [showLink, setShowLink] = useState(false);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         setIsPending(true);
         const link = new FormData(e.currentTarget).get("link") as string;
         const shortenedLink = makeUrlShort(6);
+        setShortLink(shortenedLink);
         let linkObj = {
             longLink: link,
             shortLink: shortenedLink,
@@ -29,7 +33,7 @@ export default function LinkShortenerForm() {
             if (res.ok) {
                 const result = await res.json();
                 setIsPending(false);
-                router.push("/dashboard/links");
+                setShowLink(true);
             }
         } catch (error) {
             setIsPending(false);
@@ -73,6 +77,18 @@ export default function LinkShortenerForm() {
                     )}
                 </button>
             </form>
+            {showLink && (
+                <div
+                    className={`fixed z-10 left-0 top-0 w-[100vw] h-[100vh] flex justify-center items-center ${
+                        showLink && "backdrop-blur"
+                    }`}
+                >
+                    <LinkDetails
+                        setShowLink={setShowLink}
+                        linkDetails={{ shortLink }}
+                    />
+                </div>
+            )}
         </section>
     );
 }

@@ -6,7 +6,6 @@ import LinkShortenerForm from "@dashboard/link-shortener-form";
 import RecentActivities from "@dashboard/analytics/recent-activities";
 import QrCodeComponent from "@dashboard/qr-code";
 import { getTotalClicks, getTotalLinks } from "@lib/actions";
-import { useUser } from "../context/user-context";
 import { Links } from "@lib/definitions";
 
 export default function Page() {

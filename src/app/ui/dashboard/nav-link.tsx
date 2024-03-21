@@ -18,7 +18,7 @@ export default function Navlink({
     const pathname = usePathname();
 
     return (
-        <Link href={href} className=''>
+        <Link href={href}>
             <div className='flex flex-col lg:flex-row lg:gap-4 items-center'>
                 {pathname === href ? (
                     <Image src={activeIcon} alt='' />
