@@ -1,7 +1,7 @@
-import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
-import { getLinkDocument } from "@/app/lib/firebase/firestore/get-user-links";
+import { customInitApp } from "@firebase/firebase-admin-config";
+import { getUserUidAndEmail } from "@firebase/auth/current-user-action";
+import { getLinkDocument } from "@firebase/firestore/get-user-links";
 
 customInitApp();
 

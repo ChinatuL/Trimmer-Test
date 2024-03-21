@@ -1,5 +1,5 @@
-import {registerUser} from "../../lib/firebase/auth/register-action"
 import { NextResponse } from "next/server";
+import {registerUser} from "@firebase/auth/register-action"
 
 export async function POST(request: Request) {
     try {

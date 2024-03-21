@@ -56,9 +56,7 @@ export default function Login() {
         try {
             const userCredential = await signInWithPopup(auth, provider);
             saveUserToLocalStorage(userCredential.user);
-            if (!userCredential) {
-                return;
-            }
+            if (!userCredential) return;
             const res = await fetch("/api/login", {
                 method: "POST",
                 body: JSON.stringify({}),
@@ -77,42 +75,6 @@ export default function Login() {
     }
 
     return (
-        // <form className='flex flex-col gap-4' onSubmit={handleSignInWithEmail}>
-        //     <div className='flex gap-4'>
-        //         <label htmlFor='email'>Email</label>
-        //         <input
-        //             type='email'
-        //             name='email'
-        //             id='email'
-        //             placeholder='Email'
-        //             className='bg-transparent border border-zinc-50 px-4 py-2'
-        //         />
-        //     </div>
-        //     <div className='flex gap-4'>
-        //         <label htmlFor='password'>Password</label>
-        //         <input
-        //             type='password'
-        //             name='password'
-        //             id='password'
-        //             placeholder='Password'
-        //             className='bg-transparent border border-zinc-50 px-4 py-2'
-        //         />
-        //     </div>
-        //     <button
-        //         type='submit'
-        //         className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-        //     >
-        //         Login
-        //     </button>
-        //     <button
-        //         onClick={handleSignInWithGooglePopup}
-        //         type='button'
-        //         className='bg-violet-800 text-zinc-50 py-2 px-2 w-auto'
-        //     >
-        //         Sign in with Google
-        //     </button>
-        //     {error && <p className='text-red-500'>{error}</p>}
-        // </form>
         <div className='flex justify-center items-center w-full h-full lg:w-[80%] max-w-[66rem] mx-auto font-normal lg:min-h-[95vh]'>
             <div className='hidden lg:block lg:w-[50%] lg:h-full lg:relative'>
                 <Image src={registerBg} alt='' sizes='100%' fill priority />
@@ -136,7 +98,6 @@ export default function Login() {
                             name='password'
                             placeholder='Password'
                         />
-                        {/* error messages */}
                     </div>
                     {error && (
                         <p className='text-sm pt-2 text-red-700 content-start w-full'>

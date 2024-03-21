@@ -1,7 +1,7 @@
-import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
-import { getLinkDocument } from "@/app/lib/firebase/firestore/get-user-links";
+import { customInitApp } from "@firebase/firebase-admin-config";
+import { getUserUidAndEmail } from "@firebase/auth/current-user-action";
+import { getLinkDocument } from "@firebase/firestore/get-user-links";
 
 // update the click array with the location of the click
 customInitApp();
@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-      // add to the views array
         await docRef.update({
             views: [...doc.data()?.views, viewObj],
         });

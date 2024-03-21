@@ -1,13 +1,11 @@
-import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
 import { NextResponse, NextRequest } from "next/server";
-import { getUserUidAndEmail } from "@/app/lib/firebase/auth/current-user-action";
+import { customInitApp } from "@firebase/firebase-admin-config";
+import { getUserUidAndEmail } from "@firebase/auth/current-user-action";
 import {
     getLinkDocument,
     getLinksCollection,
-} from "@/app/lib/firebase/firestore/get-user-links";
-import { getFirestore } from "firebase-admin/firestore";
+} from "@firebase/firestore/get-user-links";
 
-// delete specific link by id from firestore
 customInitApp();
 
 export async function POST(request: NextRequest) {
@@ -27,7 +25,7 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-        // check if customName is already taken
+        
         const linksCollection = getLinksCollection(uid);
         const existingLink = await linksCollection
             .where("shortLink", "==", customName)
