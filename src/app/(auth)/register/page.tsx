@@ -16,6 +16,7 @@ export default function Page() {
     const [isPending, setIsPending] = useState(false);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+      const fullName = new FormData(e.currentTarget).get("fullName") as string;
         const email = new FormData(e.currentTarget).get("email") as string;
         const password = new FormData(e.currentTarget).get(
             "password"
@@ -25,18 +26,18 @@ export default function Page() {
         try {
             const res = await fetch("/api/register", {
                 method: "POST",
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, fullName }),
             });
             if (res.ok) {
                 const result = await res.json();
                 console.log(result);
-              setError("");
-              setIsPending(false)
+                setError("");
+                setIsPending(false);
                 router.push("/login");
             } else {
                 const errorResponse = await res.json();
                 console.log(errorResponse);
-                setIsPending(false)
+                setIsPending(false);
                 setError(errorResponse);
             }
         } catch (error) {

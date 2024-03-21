@@ -1,17 +1,28 @@
 import { NextResponse } from "next/server";
-import {registerUser} from "@firebase/auth/register-action"
+import { registerUser } from "@firebase/auth/register-action";
 
 export async function POST(request: Request) {
     try {
-        const { email, password } = await request?.json();
-        console.log("Email: ", email, "Password: ", password);
-        if (!email || !password) {
+        const { fullName, email, password } = await request?.json();
+        console.log(
+            "Full Name :",
+            fullName,
+            "Email: ",
+            email,
+            "Password: ",
+            password
+        );
+        if (!email || !password || !fullName) {
             return NextResponse.json(
-                { error: "Email and password are required." },
+                { error: "FullName, Email and password are required." },
                 { status: 400 }
             );
         }
-        const registrationResult = await registerUser(email, password);
+        const registrationResult = await registerUser(
+            email,
+            password,
+            fullName
+        );
         if (registrationResult.success) {
             return NextResponse.json({
                 message: "Registration successful",
