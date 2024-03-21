@@ -1,12 +1,11 @@
 "use client";
-import { signInWithPopup } from "firebase/auth";
 import { useState } from "react";
-import { auth, provider } from "@lib/firebase/firebase-config";
 import { useRouter } from "next/navigation";
-import { useUser } from "@context/user-context";
-import { saveUserToLocalStorage } from "@lib/utilities/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@firebase/firebase-config";
+import { saveUserToLocalStorage } from "@utilities/utils";
 import FormTitle from "@auth/form-title";
 import AuthForm from "@auth/form";
 import FormRow from "@auth/form-row";

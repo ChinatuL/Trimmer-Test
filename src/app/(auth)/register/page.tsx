@@ -7,9 +7,7 @@ import FormTitle from "@auth/form-title";
 import AuthForm from "@auth/form";
 import FormRow from "@auth/form-row";
 import SubmitButton from "@auth/submit-button";
-import GoogleButton from "@auth/google-button";
 import registerBg from "@images/bg-register.png";
-import googleIcon from "@icons/google.svg";
 import ButtonSpinner from "@ui/button-spinner";
 
 export default function Page() {

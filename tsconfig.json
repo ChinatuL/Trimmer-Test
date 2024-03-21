@@ -29,6 +29,7 @@
             "@lib/*": ["./src/app/lib/*"],
             "@firebase/*": ["./src/app/lib/firebase/*"],
             "@context/*": ["./src/app/context/*"],
+            "@utilities/*": ["./src/app/lib/utilities/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

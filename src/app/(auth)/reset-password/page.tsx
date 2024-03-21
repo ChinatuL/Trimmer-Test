@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
 import FormTitle from "@auth/form-title";
 import AuthForm from "@auth/form";
 import FormRow from "@auth/form-row";

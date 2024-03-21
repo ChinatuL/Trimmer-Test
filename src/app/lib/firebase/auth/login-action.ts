@@ -1,5 +1,5 @@
 import { auth } from "firebase-admin";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth as authConfig } from "../firebase-config";

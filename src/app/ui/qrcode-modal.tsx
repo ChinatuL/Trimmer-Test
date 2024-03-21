@@ -2,7 +2,7 @@ import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import closeIcon from "@icons/close.svg";
 import { Dispatch, SetStateAction } from "react";
-import { enableScroll } from "@lib/utilities/utils";
+import { enableScroll } from "@utilities/utils";
 
 type QrCodeModalProps = {
     shortLink: string;

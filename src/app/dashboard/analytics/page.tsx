@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { Links } from "@lib/definitions";
 import CalendarComponent from "@dashboard/analytics/calendar";
 import CardsContainer from "@dashboard/analytics/cards-container";
 import RecentActivities from "@dashboard/analytics/recent-activities";
-import dynamic from "next/dynamic";
 
 export default function Page() {
     const [links, setLinks] = useState<Links[]>([]);

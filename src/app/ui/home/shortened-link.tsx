@@ -7,7 +7,7 @@ import {
     formatHomePageLink,
     shareLink,
     disableScroll,
-} from "@lib/utilities/utils";
+} from "@utilities/utils";
 import copyIcon from "@icons/copy.svg";
 import shareIcon from "@icons/share.svg";
 import QrCodeModal from "@ui/qrcode-modal";

@@ -1,8 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { makeUrlShort } from "@lib/utilities/utils";
+import { makeUrlShort } from "@utilities/utils";
 import LinkDetails from "./links/link-details";
 import arrowIcon from "@icons/arrow.svg";
 import ButtonSpinner from "../button-spinner";

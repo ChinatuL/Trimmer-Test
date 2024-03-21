@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { baseUrl } from "./app/lib/utilities/utils";
+import { baseUrl } from "@utilities/utils";
 
 export async function middleware(request: NextRequest, response: NextResponse) {
     if (request.nextUrl.pathname === "/dashboard") {
@@ -61,7 +61,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
                 body: JSON.stringify({ id: linkId, location }),
             });
             const result = await update.json();
-            console.log(result);
             return NextResponse.redirect(new URL(link.longLink, request.url));
         }
         return NextResponse.next();

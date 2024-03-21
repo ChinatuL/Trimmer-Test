@@ -1,14 +1,16 @@
 "use client";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { baseUrl, saveUserToLocalStorage } from "@lib/utilities/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import {
+    baseUrl,
+    saveUserToLocalStorage,
+    getHeadingFromPath,
+} from "@utilities/utils";
 import { auth } from "@firebase/firebase-config";
 import { signOut } from "firebase/auth";
 import settingsIcon from "@icons/settings.svg";
 import notificationIcon from "@icons/notifications.svg";
 import ProfileButton from "@dashboard/profile-button";
-import { getHeadingFromPath } from "@lib/utilities/utils";
 
 export default function DashboardHeader() {
     const pathname = usePathname();

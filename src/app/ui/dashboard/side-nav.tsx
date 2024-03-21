@@ -1,10 +1,10 @@
 "use client";
 
-import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { auth } from "@firebase/firebase-config";
-import { saveUserToLocalStorage, baseUrl } from "@lib/utilities/utils";
 import Link from "next/link";
+import { signOut } from "firebase/auth";
+import { auth } from "@firebase/firebase-config";
+import { saveUserToLocalStorage, baseUrl } from "@utilities/utils";
 import TrimmerLogo from "@ui/trimmer-logo";
 import NavLinks from "@dashboard/nav-links";
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "firebase-admin";
-import { customInitApp } from "@/app/lib/firebase/firebase-admin-config";
+import { customInitApp } from "@firebase/firebase-admin-config";
 
 customInitApp();
 export async function getUserUidAndEmail(request: NextRequest) {

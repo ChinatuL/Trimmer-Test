@@ -3,12 +3,12 @@
 import {
     createContext,
     useContext,
-  useState,
+    useState,
     useEffect,
     Dispatch,
     SetStateAction,
 } from "react";
-import { getUserFromLocalStorage } from "../lib/utilities/utils";
+import { getUserFromLocalStorage } from "@utilities/utils";
 
 interface ContextProps {
     user: any;
@@ -20,15 +20,13 @@ export const UserContext = createContext<ContextProps>({
     setUser: () => {},
 });
 
-
-
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    setUser(getUserFromLocalStorage());
-  }, [])
-  
+    useEffect(() => {
+        setUser(getUserFromLocalStorage());
+    }, []);
+
     return (
         <UserContext.Provider value={{ user, setUser }}>
             {children}

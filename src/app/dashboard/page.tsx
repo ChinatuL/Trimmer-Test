@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
+import { getTotalClicks, getTotalLinks } from "@lib/actions";
+import { Links } from "@lib/definitions";
 import BarChartComponent from "@dashboard/analytics/bar-chart";
 import StatsCard from "@dashboard/stats-card";
 import LinkShortenerForm from "@dashboard/link-shortener-form";
 import RecentActivities from "@dashboard/analytics/recent-activities";
 import QrCodeComponent from "@dashboard/qr-code";
-import { getTotalClicks, getTotalLinks } from "@lib/actions";
-import { Links } from "@lib/definitions";
 
 export default function Page() {
     const [links, setLinks] = useState<Links[]>([]);

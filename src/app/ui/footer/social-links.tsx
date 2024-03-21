@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { socialLinks } from "@/app/lib/data";
+import { socialLinks } from "@lib/data";
 export default function SocialLinks() {
     return (
         <div className='flex gap-4 items-center'>
