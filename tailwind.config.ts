@@ -20,6 +20,14 @@ const config: Config = {
                 darkBlue: "#0B0A1E",
                 darkPurple: "#1d0138",
                 analyticsBg: "#131033",
+                skeletonBg: "#0b0a1e4d",
+            },
+            keyframes: {
+                shimmer: {
+                    "100%": {
+                        transform: "translateX(100%)",
+                    },
+                },
             },
         },
     },

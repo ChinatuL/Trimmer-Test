@@ -95,7 +95,7 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
     }
 
     return (
-        <div>
+        <div className="pb-6 px-4 rounded-xl bg-analyticsBg">
             {links.map((link) => {
                 return (
                     <LinkComponent

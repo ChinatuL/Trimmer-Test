@@ -36,7 +36,7 @@ export default function Page() {
     }
 
     return (
-        <section className='bg-darkBlue h-full rounded-lg'>
+        <section className='bg-darkBlue py-6 px-4 h-full'>
             <LinksList links={links} getLinks={getLinks} />
         </section>
     );
