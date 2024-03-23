@@ -1,3 +1,4 @@
+"use client"
 export const dynamic = "force-dynamic";
 import SideNav from "@dashboard/side-nav";
 import DashboardHeader from "@dashboard/header";

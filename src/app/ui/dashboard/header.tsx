@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
+"use client"
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -9,17 +8,14 @@ import {
 } from "@utilities/utils";
 import { auth } from "@firebase/firebase-config";
 import { signOut } from "firebase/auth";
-import { useUser } from "@context/user-context";
 import settingsIcon from "@icons/settings.svg";
 import notificationIcon from "@icons/notifications.svg";
 import ProfileButton from "@dashboard/profile-button";
 
 export default function DashboardHeader() {
-    const [userName, setUserName] = useState("");
     const pathname = usePathname();
     const router = useRouter();
     const headingText = getHeadingFromPath(pathname);
-    const { user } = useUser();
 
     async function logout() {
         await signOut(auth);
@@ -31,13 +27,6 @@ export default function DashboardHeader() {
             router.push("/login");
         }
     }
-
-    useEffect(() => {
-        if (user) {
-          console.log(user.displayName);
-          setUserName(user.displayName)
-        }
-    }, [user]);
 
     return (
         <div className='flex justify-between items-center w-full text-zinc-50 py-4 px-4 bg-gradient-to-r from-darkBlue from-35% to-darkPurple to-100%'>
@@ -52,7 +41,7 @@ export default function DashboardHeader() {
                     </button>
                 </div>
                 <div className='flex gap-2'>
-                    <ProfileButton userName={userName} />
+                    <ProfileButton />
                     <button
                         onClick={logout}
                         className='text-lg text-zinc-50 hover:text-purple transitionEase lg:hidden'

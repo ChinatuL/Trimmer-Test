@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "./context/user-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +20,7 @@ export default function RootLayout({
             style={{ scrollBehavior: "smooth" }}
             className={inter.className}
         >
-            <body>
-                <UserProvider>{children}</UserProvider>
-            </body>
+            <body>{children}</body>
         </html>
     );
 }

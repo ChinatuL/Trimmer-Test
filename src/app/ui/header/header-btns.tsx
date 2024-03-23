@@ -1,9 +1,15 @@
 "use client";
-
-import { useUser } from "@context/user-context";
+import { useEffect, useState } from "react";
+import { getUserFromLocalStorage } from "@utilities/utils";
 import LinkBtn from "@ui/link-btn";
 export default function HeaderBtns() {
-    const { user } = useUser();
+  const [user, setUser] = useState(null)
+  
+  useEffect(() => {
+    const user = getUserFromLocalStorage()
+    setUser(user)
+}, [])
+
     return (
         <>
             <LinkBtn text={user ? "Dashboard" : "Login"} href={user ? "/dashboard" : "/login"} />
