@@ -7,21 +7,21 @@ export default function RecentActivitiesSkeleton() {
             ></div>
             <div className='grid grid-col-1 gap-4 pt-4'>
                 <div
-                    className={`${shimmer} relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
+                    className={`relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
                 >
                     <div
                         className={`${shimmer} relative overflow-hidden w-56 h-6 bg-skeletonBg rounded-xl`}
                     ></div>
                 </div>
                 <div
-                    className={`${shimmer} relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
+                    className={`relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
                 >
                     <div
                         className={`${shimmer} relative overflow-hidden w-56 h-6 bg-skeletonBg rounded-xl`}
                     ></div>
                 </div>
                 <div
-                    className={`${shimmer} relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
+                    className={`relative overflow-hidden p-4 border-l-8 border-l-skeletonBg border-b-8 border-b-skeletonBg rounded-xl`}
                 >
                     <div
                         className={`${shimmer} relative overflow-hidden w-56 h-6 bg-skeletonBg rounded-xl`}

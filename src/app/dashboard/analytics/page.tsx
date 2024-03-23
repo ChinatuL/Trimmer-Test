@@ -1,7 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
-// import dynamic from "next/dynamic";
 import { Links } from "@lib/definitions";
 import CalendarComponent from "@dashboard/analytics/calendar";
 import CardsContainer from "@dashboard/analytics/cards-container";
@@ -10,7 +9,6 @@ import BarChartComponent from "@dashboard/analytics/bar-chart";
 
 export default function Page() {
     const [links, setLinks] = useState<Links[]>([]);
-    const [loading, setLoading] = useState(true);
 
     async function getLinks() {
         try {
@@ -20,16 +18,11 @@ export default function Page() {
                 const links = result.links;
                 console.log(links);
                 setLinks(links);
-                setLoading(false);
             }
         } catch (error) {
             console.error(error);
         }
     }
-
-    // const MyChart = dynamic(() => import("@dashboard/analytics/bar-chart"), {
-    //     ssr: false,
-    // });
 
     useEffect(() => {
         getLinks();
@@ -40,8 +33,7 @@ export default function Page() {
             <div className='grid grid-cols-1 lg:grid-cols-[1fr_350px] items-start gap-4'>
                 <div className='grid grid-cols-1 gap-4'>
                     <CardsContainer links={links} />
-            {/* <MyChart links={links} /> */}
-            <BarChartComponent links={links} /> 
+                    <BarChartComponent links={links} />
                 </div>
                 <CalendarComponent links={links} />
             </div>
