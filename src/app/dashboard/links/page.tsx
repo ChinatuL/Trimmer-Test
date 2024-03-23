@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = 'force-dynamic';
 import { useEffect, useState } from "react";
 import LinksList from "@dashboard/links/links-list";
 export default function Page() {
@@ -10,9 +11,7 @@ export default function Page() {
             const res = await fetch("/api/authLinks");
             if (res.ok) {
                 const result = await res.json();
-                console.log(result);
                 const links = result.links;
-                console.log(links);
                 setLinks(links);
                 setLoading(false);
             }

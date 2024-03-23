@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { getTotalClicks, getTotalLinks } from "@lib/actions";
 import { Links } from "@lib/definitions";
