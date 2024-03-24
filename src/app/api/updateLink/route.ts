@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { customInitApp } from "@firebase/firebase-admin-config";
-import { getUserUidAndEmail } from "@firebase/auth/current-user-action";
 import {
     getLinkDocument,
     getLinksCollection,
@@ -10,8 +9,6 @@ customInitApp();
 
 export async function POST(request: NextRequest) {
     try {
-        const result = await getUserUidAndEmail(request);
-        const { uid } = await result.json();
         const { id, customName } = await request.json();
         if (!id) {
             return NextResponse.json(
@@ -25,8 +22,8 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-        
-        const linksCollection = getLinksCollection(uid);
+
+        const linksCollection = getLinksCollection();
         const existingLink = await linksCollection
             .where("shortLink", "==", customName)
             .get();
@@ -37,7 +34,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const docRef = getLinkDocument(uid, id);
+        const docRef = getLinkDocument(id);
         await docRef.update({ shortLink: customName });
         return NextResponse.json({ message: "Link updated" }, { status: 200 });
     } catch (error) {

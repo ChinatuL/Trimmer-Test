@@ -12,13 +12,12 @@ export async function GET(request: NextRequest) {
             const firebase = getFirestore();
             const linksCollection = firebase.collection("links");
             const orderQuery = linksCollection.orderBy("timestamp", "desc");
-            const limitQuery = orderQuery.limit(5);
-            const lastFiveLinks = await limitQuery.get();
-            const lastFiveLinksData = lastFiveLinks.docs.map((doc) =>
-                doc.data()
-            );
+            const links = await orderQuery.get();
+            const linksData = links.docs.map((doc) => {
+                return { ...doc.data(), id: doc.id };
+            });
             return NextResponse.json(
-                { links: lastFiveLinksData },
+                { links: linksData },
                 {
                     status: 200,
                     headers: {

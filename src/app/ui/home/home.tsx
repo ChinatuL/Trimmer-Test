@@ -1,18 +1,34 @@
+"use client"
+import { useState } from "react"
+import { makeUrlShort } from "@lib/utilities/utils";
+import { db } from "@firebase/firebase-config";
+import { collection, addDoc } from "firebase/firestore";
 import Image from "next/image";
 import bigLink from "@images/big-link.png";
 import bigScissor from "@images/big-scissor.png";
 import LinkShortenerForm from "./link-shortener-form";
 import ShortenedLink from "./shortened-link";
 
-type HomeComponentProps = {
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-    shortLink: string;
-};
-
-export default function HomeComponent({
-    handleSubmit,
-    shortLink,
-}: HomeComponentProps) {
+export default function HomeComponent() {
+const [shortLink, setShortLink] = useState("");
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+      const link = new FormData(e.currentTarget).get("link") as string;
+      const shortenedLink = makeUrlShort(6);
+      setShortLink(shortenedLink);
+      let linkObj = {
+          longLink: link,
+          shortLink: shortenedLink,
+          timestamp: new Date().toISOString(),
+          views: [],
+      };
+      const linksRef = collection(db, "links");
+      try {
+          const res = await addDoc(linksRef, linkObj);
+      } catch (error) {
+          console.log(error);
+      }
+  }
 
     return (
         <div className='flex justify-center items-center px-8 md:px-16 lg:px-24 h-[calc(100vh-3.5rem)] bg-gradient-to-r from-darkBlue from-35% to-darkPurple to-100%'>

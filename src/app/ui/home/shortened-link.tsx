@@ -4,7 +4,7 @@ import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
 import {
     copyLinkToClipboard,
-    formatHomePageLink,
+    formatLink,
     shareLink,
     disableScroll,
 } from "@utilities/utils";
@@ -16,7 +16,7 @@ export default function ShortenedLink({ shortLink }: { shortLink: string }) {
     const [buttonText, setButtonText] = useState("Copy");
     const [openQrCode, setOpenQrCode] = useState(false);
 
-    const formattedLink = formatHomePageLink(shortLink);
+    const formattedLink = formatLink(shortLink);
 
     function handleCopy() {
         copyLinkToClipboard(formattedLink);

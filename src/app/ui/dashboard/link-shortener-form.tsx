@@ -1,14 +1,15 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@firebase/firebase-config";
 import Image from "next/image";
-import { makeUrlShort } from "@utilities/utils";
+import { makeUrlShort, getUserFromLocalStorage } from "@utilities/utils";
 import LinkDetails from "./links/link-details";
 import arrowIcon from "@icons/arrow.svg";
 import ButtonSpinner from "../button-spinner";
 
 export default function LinkShortenerForm() {
-    const router = useRouter();
+    const [userId, setUserId] = useState("");
     const [shortLink, setShortLink] = useState("");
     const [isPending, setIsPending] = useState(false);
     const [showLink, setShowLink] = useState(false);
@@ -23,23 +24,24 @@ export default function LinkShortenerForm() {
             longLink: link,
             shortLink: shortenedLink,
             timestamp: new Date().toISOString(),
+            userId: userId,
             views: [],
         };
         try {
-            const res = await fetch("/api/createLink", {
-                method: "POST",
-                body: JSON.stringify({ linkObj }),
-            });
-            if (res.ok) {
-                const result = await res.json();
-                setIsPending(false);
-                setShowLink(true);
-            }
+            const linksRef = collection(db, "links");
+            const res = await addDoc(linksRef, linkObj);
+            setIsPending(false);
+            setShowLink(true);
         } catch (error) {
             setIsPending(false);
             console.error(error);
         }
     }
+
+    useEffect(() => {
+        const user = getUserFromLocalStorage();
+        setUserId(user.uid);
+    }, []);
 
     return (
         <section className='flex flex-col justify-center items-center gap-4 w-full border border-purple rounded-xl text-center py-2 px-4 bg-analyticsBg '>

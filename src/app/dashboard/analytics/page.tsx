@@ -2,6 +2,7 @@
 export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { Links } from "@lib/definitions";
+import { getUserFromLocalStorage } from "@utilities/utils";
 import CalendarComponent from "@dashboard/analytics/calendar";
 import CardsContainer from "@dashboard/analytics/cards-container";
 import RecentActivities from "@dashboard/analytics/recent-activities";
@@ -12,10 +13,14 @@ export default function Page() {
 
     async function getLinks() {
         try {
-            const res = await fetch("/api/authLinks");
+            const res = await fetch("/api/links");
             if (res.ok) {
                 const result = await res.json();
-                const links = result.links;
+                const user = getUserFromLocalStorage();
+                const userId = user.uid;
+                const links = result.links.filter(
+                    (link: any) => link.userId === userId
+                );
                 console.log(links);
                 setLinks(links);
             }

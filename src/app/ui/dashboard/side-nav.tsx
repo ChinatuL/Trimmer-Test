@@ -18,7 +18,7 @@ export default function SideNav() {
         });
         if (response.status === 200) {
             saveUserToLocalStorage(null);
-            router.push("/login");
+            router.push("/");
         }
     }
 

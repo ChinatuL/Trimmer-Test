@@ -1,11 +1,12 @@
 import { getFirestore } from "firebase-admin/firestore";
 
-export function getLinkDocument(uid: string, id: string) {
+export function getLinkDocument(id: string) {
     const firestore = getFirestore();
-    return firestore.collection("users").doc(uid).collection("links").doc(id);
+    return firestore.collection("links").doc(id);
 }
 
-export function getLinksCollection(uid: string) {
+export function getLinksCollection() {
     const firestore = getFirestore();
-    return firestore.collection("users").doc(uid).collection("links");
+    return firestore.collection("links");
 }
+

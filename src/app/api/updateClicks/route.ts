@@ -1,15 +1,11 @@
 import { NextResponse, NextRequest } from "next/server";
 import { customInitApp } from "@firebase/firebase-admin-config";
-import { getUserUidAndEmail } from "@firebase/auth/current-user-action";
 import { getLinkDocument } from "@firebase/firestore/get-user-links";
 
-// update the click array with the location of the click
 customInitApp();
 
 export async function POST(request: NextRequest) {
     try {
-        const result = await getUserUidAndEmail(request);
-        const { uid } = await result.json();
         const { id, location } = await request.json();
         const viewObj = { location, date: new Date().toISOString() };
         if (!id) {
@@ -18,7 +14,7 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-        const docRef = getLinkDocument(uid, id);
+        const docRef = getLinkDocument(id);
         const doc = await docRef.get();
         if (!doc.exists) {
             return NextResponse.json(

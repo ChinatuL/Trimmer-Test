@@ -21,11 +21,8 @@ export function copyLinkToClipboard(url: string) {
     }
 }
 
-export function formatLink(link: string) {
-    return `${baseUrl}as/${link}`;
-}
 
-export function formatHomePageLink(link: string) {
+export function formatLink(link: string) {
     return `${baseUrl}s/${link}`;
 }
 

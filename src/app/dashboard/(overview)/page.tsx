@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { getTotalClicks, getTotalLinks } from "@lib/actions";
 import { Links } from "@lib/definitions";
+import { getUserFromLocalStorage } from "@utilities/utils";
 import BarChartComponent from "@dashboard/analytics/bar-chart";
 import StatsCard from "@dashboard/stats-card";
 import LinkShortenerForm from "@dashboard/link-shortener-form";
@@ -17,10 +18,14 @@ export default function Page() {
     useEffect(() => {
         async function getLinks() {
             try {
-                const res = await fetch("/api/authLinks");
+                const res = await fetch("/api/links");
                 if (res.ok) {
                     const result = await res.json();
-                    const links = result.links;
+                    const user = getUserFromLocalStorage();
+                    const userId = user.uid;
+                    const links = result.links.filter(
+                        (link: any) => link.userId === userId
+                    );
                     setLinks(links);
                     setTotalLinks(getTotalLinks(links));
                     setTotalClicks(getTotalClicks(links));
