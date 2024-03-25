@@ -12,31 +12,28 @@ import {
     Legend,
 } from "recharts";
 import { getMonthName } from "@lib/utilities/utils";
-import { Links, View } from "@lib/definitions";
+import { Link } from "@lib/definitions";
 
+type BarChartData = {
+    name: string;
+    views: number;
+};
 
-export default function BarChartComponent({ links }: { links: Links[] }) {
-    const [barChartData, setBarChartData] = useState({} as any);
+export default function BarChartComponent({ links }: { links: Link[] }) {
+    const [barChartData, setBarChartData] = useState<BarChartData[]>([]);
 
     useEffect(() => {
-        const currentYear = new Date().getFullYear();
-        const currentMonth = new Date().getMonth();
-        const yearStart = new Date(currentYear, 0, 1);
-        const viewsInRange: View[] = [];
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
+        const yearStart = new Date(currentYear, 0, 1).getTime();
 
-        links.forEach((link) => {
-            const views = link.views;
-            if (views.length > 0) {
-                views.forEach((view: View) => {
-                    const viewDate = new Date(view.date);
-                    if (viewDate > yearStart) {
-                        viewsInRange.push(view);
-                    }
-                });
-            }
-        });
+        const viewsInRange = links.flatMap((link) =>
+            link.views.filter((view) => {
+                return new Date(view.date).getTime() > yearStart;
+            })
+        );
 
-        // aggregate views by month
         const monthlyViews: { [key: string]: number } = {};
         viewsInRange.forEach((view) => {
             const viewDate = new Date(view.date);
@@ -59,7 +56,6 @@ export default function BarChartComponent({ links }: { links: Links[] }) {
 
         setBarChartData(chartData);
     }, [links]);
-
 
     return (
         <section className='py-4 px-8 bg-analyticsBg rounded-xl'>

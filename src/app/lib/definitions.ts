@@ -3,10 +3,11 @@ export type View = {
     location: string;
 };
 
-export type Links = {
+export type Link = {
     id: string;
     longLink: string;
     shortLink: string;
-    timestamp: number;
+    timestamp: string;
+    userId: string;
     views: View[];
 };

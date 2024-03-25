@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import DailyStats from "./daily-stats";
-import { Links, View } from "@lib/definitions";
+import { Link, View } from "@lib/definitions";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function CalendarComponent({ links }: { links: Links[] }) {
+export default function CalendarComponent({ links }: { links: Link[] }) {
     const [date, setDate] = useState<Value>(new Date());
     const [clicks, setClicks] = useState(0);
     const [totalLinks, setTotalLinks] = useState(0);

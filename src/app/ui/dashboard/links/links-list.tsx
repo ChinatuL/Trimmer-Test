@@ -1,26 +1,27 @@
 "use client";
 import { useState, useEffect } from "react";
 import { disableScroll } from "@lib/utilities/utils";
+import { Link } from "@lib/definitions";
 import LinkComponent from "./link";
 import LinkDetails from "./link-details";
 import EditLinkModal from "./edit-link-modal";
 import DeleteLinkModal from "./delete-link-modal";
 
-type LinkDetails = {
-    id: string;
-    longLink: string;
-    shortLink: string;
-    timestamp: string;
-    views: { date: string; location: string }[];
-};
+// type LinkDetails = {
+//     id: string;
+//     longLink: string;
+//     shortLink: string;
+//     timestamp: string;
+//     views: { date: string; location: string }[];
+// };
 
 type LinkListProps = {
-    links: any[];
+    links: Link[];
     getLinks: () => Promise<void>;
 };
 
 export default function LinksList({ links, getLinks }: LinkListProps) {
-    const [linkDetails, setLinkDetails] = useState({} as LinkDetails);
+    const [linkDetails, setLinkDetails] = useState<Link | null>(null);
     const [showLink, setShowLink] = useState(false);
     const [linkId, setLinkId] = useState("");
     const [isEditing, setIsEditing] = useState(false);
@@ -28,13 +29,11 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
     const [error, setError] = useState("");
 
     function handleLinkDetails(id: string) {
-        if (links) {
-            const link = links.find((link) => link?.id === id);
-            if (!link) return;
-            setLinkDetails(link);
-            setShowLink(true);
-            disableScroll();
-        }
+        const link = links.find((link) => link?.id === id);
+        if (!link) return;
+        setLinkDetails(link);
+        setShowLink(true);
+        disableScroll();
     }
 
     function openEditModal(id: string) {
@@ -61,7 +60,6 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
             });
             if (res.ok) {
                 const result = await res.json();
-                console.log(result);
                 setLinkId("");
                 await getLinks();
                 setIsEditing(false);
@@ -84,7 +82,6 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
             });
             if (res.ok) {
                 const result = await res.json();
-                console.log(result);
                 setLinkId("");
                 await getLinks();
                 setIsDeleting(false);

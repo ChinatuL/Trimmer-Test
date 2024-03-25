@@ -2,9 +2,10 @@
 export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import { getUserFromLocalStorage } from "@utilities/utils";
+import { Link } from "@lib/definitions";
 import LinksList from "@dashboard/links/links-list";
 export default function Page() {
-    const [links, setLinks] = useState([] as any[]);
+    const [links, setLinks] = useState<Link[]>([]);
     async function getLinks() {
         try {
             const res = await fetch("/api/links");
@@ -13,9 +14,8 @@ export default function Page() {
                 const user = getUserFromLocalStorage();
                 const userId = user.uid;
                 const links = result.links.filter(
-                    (link: any) => link.userId === userId
+                    (link: Link) => link.userId === userId
                 );
-                console.log(links);
                 setLinks(links);
             }
         } catch (error) {

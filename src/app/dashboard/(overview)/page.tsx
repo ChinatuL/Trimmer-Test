@@ -1,8 +1,7 @@
 "use client";
-export const dynamic = "force-dynamic";
 import { useState, useEffect } from "react";
 import { getTotalClicks, getTotalLinks } from "@lib/actions";
-import { Links } from "@lib/definitions";
+import { Link } from "@lib/definitions";
 import { getUserFromLocalStorage } from "@utilities/utils";
 import BarChartComponent from "@dashboard/analytics/bar-chart";
 import StatsCard from "@dashboard/stats-card";
@@ -11,7 +10,7 @@ import RecentActivities from "@dashboard/analytics/recent-activities";
 import QrCodeComponent from "@dashboard/qr-code";
 
 export default function Page() {
-    const [links, setLinks] = useState<Links[]>([]);
+    const [links, setLinks] = useState<Link[]>([]);
     const [totalLinks, setTotalLinks] = useState(0);
     const [totalClicks, setTotalClicks] = useState(0);
 
@@ -24,7 +23,7 @@ export default function Page() {
                     const user = getUserFromLocalStorage();
                     const userId = user.uid;
                     const links = result.links.filter(
-                        (link: any) => link.userId === userId
+                        (link: Link) => link.userId === userId
                     );
                     setLinks(links);
                     setTotalLinks(getTotalLinks(links));

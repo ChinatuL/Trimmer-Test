@@ -3,12 +3,13 @@ import { QRCodeSVG } from "qrcode.react";
 import { baseUrl, formatDay } from "@utilities/utils";
 import calendarIcon from "@icons/calendar.svg";
 import linkIcon from "@icons/link.svg";
+
 export default function QrCodeComponent() {
     function getCurrentDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const monthName = today.toLocaleString("default", { month: "long" });
-        const day = formatDay(today.getDate());
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const monthName = currentDate.toLocaleString("default", { month: "long" });
+        const day = formatDay(currentDate.getDate());
         return `${day} ${monthName}, ${year}`;
     }
 

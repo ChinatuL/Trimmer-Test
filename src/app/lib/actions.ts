@@ -1,5 +1,5 @@
-import { Links } from "./definitions";
-export function getTotalLinks(links: Links[]) {
+import { Link } from "./definitions";
+export function getTotalLinks(links: Link[]) {
     let totalLinks = 0;
     links.forEach((link) => {
         totalLinks++;
@@ -7,7 +7,7 @@ export function getTotalLinks(links: Links[]) {
     return totalLinks;
 }
 
-export function getTotalClicks(links: Links[]) {
+export function getTotalClicks(links: Link[]) {
     let totalClicks = 0;
     links.forEach((link) => {
         link.views.forEach((view) => {

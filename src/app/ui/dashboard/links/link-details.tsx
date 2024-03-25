@@ -3,6 +3,7 @@ import Image from "next/image";
 import closeIcon from "@icons/close.svg";
 import copyIcon from "@icons/copy.svg";
 import ShareButtons from "./share-buttons";
+import { Link } from "@lib/definitions";
 import {
     baseUrl,
     copyLinkToClipboard,
@@ -12,14 +13,14 @@ import {
 
 type LinkDetailsProps = {
     setShowLink: (showLink: boolean) => void;
-    linkDetails: {
-        shortLink: string;
-    };
+    linkDetails: Link | null;
 };
 export default function LinkDetails({
     setShowLink,
     linkDetails,
 }: LinkDetailsProps) {
+    if (!linkDetails) return null;
+
     const formattedLink = formatLink(linkDetails.shortLink);
 
     function handleCopy() {

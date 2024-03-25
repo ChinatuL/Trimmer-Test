@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { customInitApp } from "@firebase/firebase-admin-config";
 import { getFirestore } from "firebase-admin/firestore";
-import { deleteOldLinks } from "@firebase/firestore/links";
+import { deleteOldLinks } from "@firebase/firestore/delete-old-links";
 
 customInitApp();
 export async function GET(request: NextRequest) {

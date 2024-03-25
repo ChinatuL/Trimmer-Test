@@ -1,6 +1,9 @@
 export const baseUrl =
     process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000/";
 
+export const shimmer =
+    "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent";
+
 export function makeUrlShort(length: number) {
     let result = "";
     const characters =
@@ -21,7 +24,6 @@ export function copyLinkToClipboard(url: string) {
     }
 }
 
-
 export function formatLink(link: string) {
     return `${baseUrl}s/${link}`;
 }
@@ -38,7 +40,6 @@ export function getUserFromLocalStorage() {
     }
 }
 
-
 export function generateRating(num: number) {
     let arr = [];
     for (let i = 0; i < num; i++) {
@@ -46,7 +47,6 @@ export function generateRating(num: number) {
     }
     return arr;
 }
-
 
 export async function shareLink(formattedLink: string) {
     try {
@@ -99,21 +99,18 @@ export function getMonthName(monthIndex: number) {
 }
 
 export function formatDay(day: number) {
-  switch (day) {
-    case 1:
-    case 21:
-    case 31:
-      return `${day}st`;
-    case 2:
-    case 22:
-      return `${day}nd`;
-    case 3:
-    case 23:
-      return `${day}rd`;
-    default:
-      return `${day}th`;
-  }
+    switch (day) {
+        case 1:
+        case 21:
+        case 31:
+            return `${day}st`;
+        case 2:
+        case 22:
+            return `${day}nd`;
+        case 3:
+        case 23:
+            return `${day}rd`;
+        default:
+            return `${day}th`;
+    }
 }
-
-export const shimmer =
-    "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent";

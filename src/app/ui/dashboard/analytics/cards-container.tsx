@@ -1,22 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Links, View } from "@lib/definitions";
+import { Link, View } from "@lib/definitions";
 import StatCard from "./stat-card";
-export default function CardsContainer({ links }: { links: Links[] }) {
+export default function CardsContainer({ links }: { links: Link[] }) {
     const [totalLinks, setTotalLinks] = useState(0);
     const [totalClicks, setTotalClicks] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
 
     useEffect(() => {
-        let totalLinks = 0;
+        const totalLinks = links.length;
         let totalClicks = 0;
         let uniqueLocations: string[] = [];
         let totalUsers = 0;
 
         links.forEach((link) => {
-            totalLinks++;
             totalClicks += link.views.length;
-
             link.views.forEach((view: View) => {
                 if (!uniqueLocations.includes(view.location)) {
                     uniqueLocations.push(view.location);
@@ -24,7 +22,6 @@ export default function CardsContainer({ links }: { links: Links[] }) {
             });
             totalUsers = uniqueLocations.length;
         });
-        console.log(uniqueLocations);
         setTotalLinks(totalLinks);
         setTotalClicks(totalClicks);
         setTotalUsers(totalUsers);
