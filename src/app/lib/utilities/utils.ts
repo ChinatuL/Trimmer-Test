@@ -38,12 +38,6 @@ export function getUserFromLocalStorage() {
     }
 }
 
-export function saveLinkClick() {
-    let clicks = 0;
-    clicks += 1;
-    console.log(clicks);
-    return clicks;
-}
 
 export function generateRating(num: number) {
     let arr = [];
@@ -53,21 +47,6 @@ export function generateRating(num: number) {
     return arr;
 }
 
-export function validateFormFields(
-    name?: string,
-    email?: string,
-    password?: string,
-    newPassword?: string
-) {
-    let error = "";
-    if (!name || !email || !password) {
-        return { error: "Name, Email and password are required." };
-    }
-    if (password && password.length < 6) {
-        return { error: "Password must be at least 6 characters long." };
-    }
-    return error;
-}
 
 export async function shareLink(formattedLink: string) {
     try {
