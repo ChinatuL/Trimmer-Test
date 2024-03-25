@@ -12,15 +12,15 @@ import ShortenedLink from "./shortened-link";
 export default function HomeComponent() {
     const [shortLink, setShortLink] = useState("");
     const [error, setError] = useState("");
+    const [link, setLink] = useState("");
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        const link = new FormData(e.currentTarget).get("link") as string;
         if (!link) {
             setError("Please enter a link to shortened!");
             return;
         }
 
-        if (!link.startsWith("http://") || !link.startsWith("https://")) {
+        if (!link.includes("http") || !link.includes("https")) {
             setError("Please enter a valid link!");
             return;
         }
@@ -36,6 +36,8 @@ export default function HomeComponent() {
         const linksRef = collection(db, "links");
         try {
             const res = await addDoc(linksRef, linkObj);
+            setError("");
+            setLink("");
         } catch (error) {
             console.log(error);
         }
@@ -59,6 +61,8 @@ export default function HomeComponent() {
                     <LinkShortenerForm
                         handleSubmit={handleSubmit}
                         error={error}
+                        value={link}
+                        setLink={setLink}
                     />
                     {shortLink && <ShortenedLink shortLink={shortLink} />}
                 </div>

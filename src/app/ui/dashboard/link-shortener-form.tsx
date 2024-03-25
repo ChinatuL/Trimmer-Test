@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@firebase/firebase-config";
-import { Link } from "@lib/definitions";
 import Image from "next/image";
 import { makeUrlShort, getUserFromLocalStorage } from "@utilities/utils";
 import LinkDetails from "./links/link-details";
@@ -11,14 +10,26 @@ import ButtonSpinner from "../button-spinner";
 
 export default function LinkShortenerForm() {
     const [userId, setUserId] = useState("");
+    const [link, setLink] = useState("");
     const [shortLink, setShortLink] = useState("");
     const [isPending, setIsPending] = useState(false);
     const [showLink, setShowLink] = useState(false);
+    const [error, setError] = useState("");
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+
+        if (!link) {
+            setError("Please enter a link to shorten!");
+            return;
+        }
+
+        if (!link.includes("http") || !link.includes("https")) {
+            setError("Please enter a valid link!");
+            return;
+        }
+
         setIsPending(true);
-        const link = new FormData(e.currentTarget).get("link") as string;
         const shortenedLink = makeUrlShort(6);
         setShortLink(shortenedLink);
         let linkObj = {
@@ -32,6 +43,8 @@ export default function LinkShortenerForm() {
             const linksRef = collection(db, "links");
             const res = await addDoc(linksRef, linkObj);
             setIsPending(false);
+            setError("");
+            setLink("");
             setShowLink(true);
         } catch (error) {
             setIsPending(false);
@@ -58,13 +71,20 @@ export default function LinkShortenerForm() {
                     <label htmlFor='link' className='sr-only'>
                         Enter your link
                     </label>
-                    <input
-                        type='text'
-                        name='link'
-                        id='link'
-                        placeholder='Paste your url here'
-                        className='bg-transparent border border-purple rounded-xl px-4 py-2 placeholder:text-center placeholder:text-zinc-50 placeholder:opacity-60'
-                    />
+                    <div>
+                        <input
+                            type='text'
+                            name='link'
+                            id='link'
+                            value={link}
+                            onChange={(e) => setLink(e.target.value)}
+                            placeholder='Paste your url here'
+                            className='bg-transparent border border-purple rounded-xl px-4 py-2 placeholder:text-center placeholder:text-zinc-50 placeholder:opacity-60'
+                        />
+                        {error && (
+                            <p className='text-sm text-red-700'>{error}</p>
+                        )}
+                    </div>
                 </div>
                 <button
                     type='submit'

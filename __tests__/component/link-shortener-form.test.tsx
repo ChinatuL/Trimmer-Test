@@ -15,7 +15,14 @@ describe("LinkShortenerForm", () => {
     });
 
     test("renders the form correctly", () => {
-        render(<LinkShortenerForm error='' handleSubmit={async () => {}} />);
+        render(
+            <LinkShortenerForm
+                error=''
+                handleSubmit={async () => {}}
+                value=''
+                setLink={() => {}}
+            />
+        );
         expect(screen.getByLabelText(/Enter a link to shorten/i)).toBeDefined();
         expect(
             screen.getByPlaceholderText(/Enter Your Link Here/i)
@@ -26,7 +33,14 @@ describe("LinkShortenerForm", () => {
     });
 
     test("shows error message when link is not entered", async () => {
-        render(<LinkShortenerForm error='' handleSubmit={async () => {}} />);
+        render(
+            <LinkShortenerForm
+                error=''
+                handleSubmit={async () => {}}
+                value=''
+                setLink={() => {}}
+            />
+        );
         const button = screen.getByRole("button", { name: /Shorten Link/i });
         fireEvent.submit(button);
         await waitFor(() => {
@@ -37,7 +51,14 @@ describe("LinkShortenerForm", () => {
     });
 
     test("shows error message when form is submitted with invalid link", async () => {
-        render(<LinkShortenerForm error='' handleSubmit={async () => {}} />);
+        render(
+            <LinkShortenerForm
+                error=''
+                handleSubmit={async () => {}}
+                value=''
+                setLink={() => {}}
+            />
+        );
         const input = screen.getByPlaceholderText(/Enter Your Link Here/i);
         userEvent.type(input, "invalidlink");
         const button = screen.getByRole("button", { name: /Shorten Link/i });
@@ -46,6 +67,29 @@ describe("LinkShortenerForm", () => {
             expect(
                 screen.findByText(/Please enter a valid link!/i)
             ).toBeDefined();
+        });
+    });
+
+    test("submits the form with valid link", async () => {
+        render(
+            <LinkShortenerForm
+                error=''
+                handleSubmit={async () => {}}
+                value=''
+                setLink={() => {}}
+            />
+        );
+        const input = screen.getByPlaceholderText(/Enter Your Link Here/i);
+        userEvent.type(input, "https://example.com");
+        const button = screen.getByRole("button", { name: /Shorten Link/i });
+        fireEvent.submit(button);
+        await waitFor(() => {
+            expect(
+                screen.queryByText(/Please enter a link to shortened!/i)
+            ).toBeNull();
+            expect(
+                screen.queryByText(/Please enter a valid link!/i)
+            ).toBeNull();
         });
     });
 });

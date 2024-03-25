@@ -1,15 +1,20 @@
 import Image from "next/image";
 import smallLink from "@images/small-link.png";
 import smallScissor from "@images/small-scissor.png";
+import { Dispatch, SetStateAction } from "react";
 
 type LinkShortenerFormProps = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     error: string;
+    value: string;
+    setLink: Dispatch<SetStateAction<string>>;
 };
 
 export default function LinkShortenerForm({
     handleSubmit,
     error,
+    value,
+    setLink,
 }: LinkShortenerFormProps) {
     return (
         <form
@@ -39,6 +44,8 @@ export default function LinkShortenerForm({
                         name='link'
                         type='text'
                         id='link'
+                        value={value}
+                        onChange={(e) => setLink(e.target.value)}
                         placeholder='Enter Your Link Here'
                         className='bg-darkBlue border border-zinc-50 py-3 px-4 placeholder:text-center rounded-lg w-full'
                     />
