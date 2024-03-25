@@ -6,8 +6,8 @@ import { Link } from "@lib/definitions";
 export default function RecentActivities({ links }: { links: Link[] }) {
     const [recentLinks, setRecentLinks] = useState<Link[]>([]);
 
-    useEffect(() => {
-        const lastThreeLinks = links.slice(-3);
+  useEffect(() => {
+      const lastThreeLinks = links.slice(0, 3);
         setRecentLinks(lastThreeLinks);
     }, [links]);
 

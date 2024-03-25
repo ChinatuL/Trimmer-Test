@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@firebase/firebase-config";
+import { Link } from "@lib/definitions";
 import Image from "next/image";
 import { makeUrlShort, getUserFromLocalStorage } from "@utilities/utils";
 import LinkDetails from "./links/link-details";
@@ -87,7 +88,7 @@ export default function LinkShortenerForm() {
                 >
                     <LinkDetails
                         setShowLink={setShowLink}
-                        linkDetails={{ shortLink }}
+                        linkDetails={shortLink}
                     />
                 </div>
             )}

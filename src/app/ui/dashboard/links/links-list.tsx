@@ -7,21 +7,13 @@ import LinkDetails from "./link-details";
 import EditLinkModal from "./edit-link-modal";
 import DeleteLinkModal from "./delete-link-modal";
 
-// type LinkDetails = {
-//     id: string;
-//     longLink: string;
-//     shortLink: string;
-//     timestamp: string;
-//     views: { date: string; location: string }[];
-// };
-
 type LinkListProps = {
     links: Link[];
     getLinks: () => Promise<void>;
 };
 
 export default function LinksList({ links, getLinks }: LinkListProps) {
-    const [linkDetails, setLinkDetails] = useState<Link | null>(null);
+    const [linkDetails, setLinkDetails] = useState("");
     const [showLink, setShowLink] = useState(false);
     const [linkId, setLinkId] = useState("");
     const [isEditing, setIsEditing] = useState(false);
@@ -31,7 +23,7 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
     function handleLinkDetails(id: string) {
         const link = links.find((link) => link?.id === id);
         if (!link) return;
-        setLinkDetails(link);
+        setLinkDetails(link.shortLink);
         setShowLink(true);
         disableScroll();
     }

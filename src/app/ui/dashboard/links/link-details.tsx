@@ -13,7 +13,7 @@ import {
 
 type LinkDetailsProps = {
     setShowLink: (showLink: boolean) => void;
-    linkDetails: Link | null;
+    linkDetails: string;
 };
 export default function LinkDetails({
     setShowLink,
@@ -21,7 +21,7 @@ export default function LinkDetails({
 }: LinkDetailsProps) {
     if (!linkDetails) return null;
 
-    const formattedLink = formatLink(linkDetails.shortLink);
+    const formattedLink = formatLink(linkDetails);
 
     function handleCopy() {
         copyLinkToClipboard(formattedLink);
@@ -43,7 +43,7 @@ export default function LinkDetails({
             <div className='flex flex-col md:flex-row gap-8'>
                 <div className='flex flex-col order-1 md:order-none gap-6'>
                     <QRCodeComponent
-                        value={`${baseUrl}as/${linkDetails.shortLink}`}
+                        value={`${baseUrl}as/${linkDetails}`}
                         size={100}
                     />
                     <button className='w-max md:w-auto border border-purple text-purple rounded-lg px-3 py-1 transitionEase hover:bg-purple hover:text-zinc-50 hover:border-none'>
