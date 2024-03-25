@@ -1,9 +1,9 @@
-import { expect, expectTypeOf, test, describe, it } from "vitest";
+import { expect, expectTypeOf, describe, it } from "vitest";
 import {
     makeUrlShort,
     generateRating,
     getHeadingFromPath,
-} from "../src/app/lib/utilities/utils";
+} from "../../src/app/lib/utilities/utils";
 
 describe("makeUrlShort", () => {
     it("returns a string of length equal to the number passed in", () => {

@@ -1,5 +1,5 @@
-"use client"
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 import { makeUrlShort } from "@lib/utilities/utils";
 import { db } from "@firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
@@ -10,25 +10,36 @@ import LinkShortenerForm from "./link-shortener-form";
 import ShortenedLink from "./shortened-link";
 
 export default function HomeComponent() {
-const [shortLink, setShortLink] = useState("");
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-      e.preventDefault();
-      const link = new FormData(e.currentTarget).get("link") as string;
-      const shortenedLink = makeUrlShort(6);
-      setShortLink(shortenedLink);
-      let linkObj = {
-          longLink: link,
-          shortLink: shortenedLink,
-          timestamp: new Date().toISOString(),
-          views: [],
-      };
-      const linksRef = collection(db, "links");
-      try {
-          const res = await addDoc(linksRef, linkObj);
-      } catch (error) {
-          console.log(error);
-      }
-  }
+    const [shortLink, setShortLink] = useState("");
+    const [error, setError] = useState("");
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const link = new FormData(e.currentTarget).get("link") as string;
+        if (!link) {
+            setError("Please enter a link to shortened!");
+            return;
+        }
+
+        if (!link.startsWith("http://") || !link.startsWith("https://")) {
+            setError("Please enter a valid link!");
+            return;
+        }
+
+        const shortenedLink = makeUrlShort(6);
+        setShortLink(shortenedLink);
+        let linkObj = {
+            longLink: link,
+            shortLink: shortenedLink,
+            timestamp: new Date().toISOString(),
+            views: [],
+        };
+        const linksRef = collection(db, "links");
+        try {
+            const res = await addDoc(linksRef, linkObj);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className='flex justify-center items-center px-8 md:px-16 lg:px-24 h-[calc(100vh-3.5rem)] bg-gradient-to-r from-darkBlue from-35% to-darkPurple to-100%'>
@@ -45,7 +56,10 @@ const [shortLink, setShortLink] = useState("");
                         Make your links more manageable, trackable, and
                         shareable with our advanced URL shortening service.
                     </p>
-                    <LinkShortenerForm handleSubmit={handleSubmit} />
+                    <LinkShortenerForm
+                        handleSubmit={handleSubmit}
+                        error={error}
+                    />
                     {shortLink && <ShortenedLink shortLink={shortLink} />}
                 </div>
                 <div className='hidden lg:w-[35%] lg:h-full lg:grid lg:place-items-center'>
