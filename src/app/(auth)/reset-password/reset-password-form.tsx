@@ -41,7 +41,7 @@ export default function ResetPasswordForm() {
             toast.success("Password reset successful!");
             setTimeout(() => {
                 router.push("/login");
-            }, 1000);
+            }, 2000);
         } catch (error) {
             console.error("Error during password reset:", error);
         }
