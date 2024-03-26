@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
+import { auth } from "@firebase/firebase-config";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import FormTitle from "@auth/form-title";
 import AuthForm from "@auth/form";
 import FormRow from "@auth/form-row";
@@ -10,8 +13,28 @@ import ButtonSpinner from "@/app/ui/button-spinner";
 
 export default function Register() {
     const [isPending, setIsPending] = useState(false);
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const [error, setError] = useState("");
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        const email = new FormData(e.currentTarget).get("email") as string;
+        if (!email) {
+            setError("Please enter your email!");
+            return;
+        }
+        setIsPending(true);
+        try {
+            const res = await sendPasswordResetEmail(auth, email);
+            setError("");
+            toast.success("Password reset email sent successfully!");
+            setIsPending(false);
+        } catch (error) {
+            setIsPending(false);
+            if (error.code === "auth/user-not-found") {
+                setError("User not found! Please check your email address.");
+            }
+            console.error("Error during password reset:", error);
+        }
     }
 
     return (
@@ -38,9 +61,12 @@ export default function Register() {
                             name='email'
                             placeholder='Email Address'
                         />
-                        {/* error messages */}
                     </div>
-                    <p className='text-[0.75rem] pt-1'></p>
+                    {error && (
+                        <p className='text-[0.75rem] pt-1 text-red-700'>
+                            {error}
+                        </p>
+                    )}
                     <div className='grid gap-4 text-center pt-4 w-full'>
                         <SubmitButton>
                             {isPending ? <ButtonSpinner /> : "Submit"}

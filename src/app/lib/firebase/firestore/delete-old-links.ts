@@ -11,11 +11,9 @@ export async function deleteOldLinks() {
     );
     try {
         const links = await query.get();
-        console.log(links);
         const deletePromise = links.docs.map(async (doc) => {
             await doc.ref.delete();
         });
-        console.log(deletePromise);
         await Promise.all(deletePromise);
         if (links.size > 0) {
             return NextResponse.json(

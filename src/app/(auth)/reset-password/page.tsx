@@ -1,5 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { auth } from "@firebase/firebase-config";
+import { confirmPasswordReset } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Image from "next/image";
 import FormTitle from "@auth/form-title";
 import AuthForm from "@auth/form";
@@ -10,8 +15,35 @@ import ButtonSpinner from "@ui/button-spinner";
 
 export default function Page() {
     const [isPending, setIsPending] = useState(false);
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const [error, setError] = useState("");
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const oobCode = searchParams.get("oobCode");
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        const password = new FormData(e.currentTarget).get(
+            "password"
+        ) as string;
+        const confirmPassword = new FormData(e.currentTarget).get(
+            "confirm-password"
+        ) as string;
         e.preventDefault();
+        if (!password || !confirmPassword) {
+            setError("Please enter your new password!");
+            return;
+        }
+        setIsPending(true);
+        try {
+            if (!oobCode) return setError("Invalid or expired reset link");
+            const res = await confirmPasswordReset(auth, oobCode, password);
+            setError("");
+            toast.success("Password reset successful!");
+            setTimeout(() => {
+                router.push("/login");
+            }, 1000);
+        } catch (error) {
+            console.error("Error during password reset:", error);
+        }
     }
 
     return (
@@ -44,11 +76,16 @@ export default function Page() {
                             name='confirm-password'
                             placeholder='Confirm New Password'
                         />
-                        {/* error messages */}
                     </div>
-                    <p className='text-[0.75rem] pt-1'></p>
+                    {error && (
+                        <p className='text-[0.75rem] pt-1 text-red-700'>
+                            {error}
+                        </p>
+                    )}
                     <div className='grid gap-4 text-center pt-4 w-full'>
-              <SubmitButton>{ isPending ? <ButtonSpinner/> : "Reset"}</SubmitButton>
+                        <SubmitButton>
+                            {isPending ? <ButtonSpinner /> : "Reset"}
+                        </SubmitButton>
                     </div>
                 </AuthForm>
             </div>

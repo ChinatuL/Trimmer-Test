@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ToastProvider from "@lib/react-toastify/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
             style={{ scrollBehavior: "smooth" }}
             className={inter.className}
         >
-            <body>{children}</body>
+            <body>
+                <ToastProvider>{children}</ToastProvider>
+            </body>
         </html>
     );
 }
