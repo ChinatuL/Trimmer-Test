@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import { enableScroll, disableScroll } from "@utilities/utils";
 import TrimmerLogo from "@ui/trimmer-logo";
 import Navlinks from "./nav-links";
 import HeaderBtns from "./header-btns";
@@ -11,10 +12,12 @@ export default function Header() {
 
   function openNav() {
     setIsNavOpen(true)
+    disableScroll()
   }
 
   function closeNav() {
     setIsNavOpen(false)
+    enableScroll()
   }
 
     return (

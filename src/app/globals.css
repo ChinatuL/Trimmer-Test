@@ -7,7 +7,6 @@ input:-webkit-autofill:focus {
     transition: background-color 0s 600000s, color 0s 600000s !important;
 }
 
-
 .react-calendar {
     /* width: 300px; */
     max-width: 100%;
@@ -27,7 +26,7 @@ input:-webkit-autofill:focus {
 }
 
 .react-calendar__viewContainer {
-  padding: 0 0.5rem;
+    padding: 0 0.5rem;
 }
 
 .react-calendar__navigation__prev2-button,
@@ -80,8 +79,8 @@ abbr:where([title]) {
     border-radius: 4px;
 }
 
-.test {
-  background-color: #131032cc;
+.slick-active > div {
+    background-color: #9d37ed;
 }
 
 
