@@ -82,7 +82,6 @@ export default function LinksList({ links, getLinks }: LinkListProps) {
             console.error(error);
         }
     }
-
     return (
         <div className='pb-6 px-4 rounded-xl bg-analyticsBg'>
             {links.map((link) => {

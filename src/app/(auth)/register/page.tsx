@@ -41,6 +41,7 @@ export default function Page() {
                 setError(errorResponse);
             }
         } catch (error) {
+          setIsPending(false)
             console.log("Error during registration", error);
             setError("An unexpected error occurred. Please try again.");
         }

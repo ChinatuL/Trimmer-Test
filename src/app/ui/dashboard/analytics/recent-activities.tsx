@@ -13,7 +13,7 @@ export default function RecentActivities({ links }: { links: Link[] }) {
 
     return (
         <section className='flex flex-col gap-2 bg-analyticsBg p-4 rounded-xl'>
-        <h2 className='text-lg font-semibold'>{links ? "Recent Links" : "No links"}</h2>
+        <h2 className='text-lg font-semibold'>{links.length > 0 ? "Recent Links" : "No links"}</h2>
             <div className='grid grid-col-1 gap-4'>
                 {recentLinks.map((link: Link) => {
                     const { id, shortLink } = link;

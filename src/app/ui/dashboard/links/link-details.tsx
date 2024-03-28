@@ -3,7 +3,7 @@ import Image from "next/image";
 import closeIcon from "@icons/close.svg";
 import copyIcon from "@icons/copy.svg";
 import ShareButtons from "./share-buttons";
-import { Link } from "@lib/definitions";
+import {toast} from "react-toastify"
 import {
     baseUrl,
     copyLinkToClipboard,
@@ -24,7 +24,8 @@ export default function LinkDetails({
     const formattedLink = formatLink(linkDetails);
 
     function handleCopy() {
-        copyLinkToClipboard(formattedLink);
+      copyLinkToClipboard(formattedLink);
+      toast.success("Copied!")
     }
 
     function closeLinkDetails() {
@@ -62,7 +63,7 @@ export default function LinkDetails({
                         </button>
                     </div>
                     <p className='font-semibold'>Share via:</p>
-                    <ShareButtons />
+            <ShareButtons formattedLink={formattedLink} />
                 </div>
             </div>
             <button

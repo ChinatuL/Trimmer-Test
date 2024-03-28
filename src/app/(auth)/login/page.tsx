@@ -43,10 +43,11 @@ export default function Login() {
             } else {
                 const errorResponse = await res.json();
                 console.error(errorResponse);
-                setIsPending(true);
+                setIsPending(false);
                 setError("Login failed. Incorrect email or password.");
             }
         } catch (error) {
+            setIsPending(false);
             console.error("Error during login:", error);
             setError("An unexpected error occurred. Please try again.");
         }
