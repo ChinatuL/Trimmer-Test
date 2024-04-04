@@ -30,7 +30,7 @@ export default function DashboardHeader() {
 
     return (
         <div className='flex justify-between items-center w-full text-zinc-50 py-4 px-4 bg-gradient-to-r from-darkBlue from-35% to-darkPurple to-100%'>
-            <h1 className='text-lg lg:text-3xl'>{headingText}</h1>
+            <h1 className='text-lg lg:text-2xl'>{headingText}</h1>
             <div className='flex gap-16'>
                 <div className='hidden lg:flex gap-4 items-center'>
                     <button className='hover:scale-125 transitionEase'>

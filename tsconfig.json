@@ -23,6 +23,9 @@
             "@ui/*": ["./src/app/ui/*"],
             "@auth/*": ["./src/app/ui/auth/*"],
             "@dashboard/*": ["./src/app/ui/dashboard/*"],
+            "@links/*": ["./src/app/ui/dashboard/links/*"],
+            "@analytics/*": ["./src/app/ui/dashboard/analytics/*"],
+            "@profile/*": ["./src/app/ui/dashboard/profile/*"],
             "@public/*": ["./public/*"],
             "@images/*": ["./public/images/*"],
             "@icons/*": ["./public/icons/*"],
@@ -30,7 +33,7 @@
             "@firebase/*": ["./src/app/lib/firebase/*"],
             "@context/*": ["./src/app/context/*"],
             "@utilities/*": ["./src/app/lib/utilities/*"],
-            "@skeletons/*" : ["./src/app/ui/skeletons/*"]
+            "@skeletons/*": ["./src/app/ui/skeletons/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

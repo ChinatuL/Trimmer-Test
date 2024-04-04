@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { useEffect, useState } from "react";
 import { getUserFromLocalStorage } from "@utilities/utils";
 import { Link } from "@lib/definitions";
-import LinksList from "@dashboard/links/links-list";
+import LinksList from "@links/links-list";
 export default function Page() {
     const [links, setLinks] = useState<Link[]>([]);
     const [loading, setLoading] = useState(false);

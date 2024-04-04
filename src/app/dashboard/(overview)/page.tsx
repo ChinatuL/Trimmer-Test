@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { getTotalClicks, getTotalLinks } from "@lib/actions";
 import { Link } from "@lib/definitions";
 import { getUserFromLocalStorage } from "@utilities/utils";
-import BarChartComponent from "@dashboard/analytics/bar-chart";
+import BarChartComponent from "@analytics/bar-chart";
 import StatsCard from "@dashboard/stats-card";
 import LinkShortenerForm from "@dashboard/link-shortener-form";
-import RecentActivities from "@dashboard/analytics/recent-activities";
+import RecentActivities from "@analytics/recent-activities";
 import QrCodeComponent from "@dashboard/qr-code";
 
 export default function Page() {

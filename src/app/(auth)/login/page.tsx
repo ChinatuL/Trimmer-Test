@@ -37,7 +37,7 @@ export default function Login() {
             if (res.ok) {
                 const result = await res.json();
                 setError("");
-                saveUserToLocalStorage(result.user);
+                saveUserToLocalStorage({...result.user, password});
                 setIsPending(false);
                 router.replace("/dashboard");
             } else {

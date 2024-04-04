@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "@lib/definitions";
 import { getUserFromLocalStorage } from "@utilities/utils";
-import CalendarComponent from "@dashboard/analytics/calendar";
-import CardsContainer from "@dashboard/analytics/cards-container";
-import RecentActivities from "@dashboard/analytics/recent-activities";
-import BarChartComponent from "@dashboard/analytics/bar-chart";
+import CalendarComponent from "@analytics/calendar";
+import CardsContainer from "@analytics/cards-container";
+import RecentActivities from "@analytics/recent-activities";
+import BarChartComponent from "@analytics/bar-chart";
 
 export default function Page() {
     const [links, setLinks] = useState<Link[]>([]);
